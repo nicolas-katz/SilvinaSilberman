@@ -7,11 +7,13 @@ export default function App() {
   return (
         <Routes>
           <Route 
-            exact path='/' 
-            element={<Index />} />
+            path='/' 
+            element={<Index />} 
+          />
           <Route 
             path='/contacto' 
-            element={<Contact />} />
+            element={<Contact />} 
+          />
         </Routes>  
   );
 };

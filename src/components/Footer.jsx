@@ -23,6 +23,10 @@ const StyledFooter = styled.footer`
     justify-content: space-between;
   }
 
+  @media only screen and (min-width: 1024px) {
+    padding: 20px 80px;
+  }
+
   @media only screen and (min-width: 1200px) {
     padding: 20px 120px;
   }

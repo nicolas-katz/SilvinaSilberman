@@ -50,6 +50,7 @@ const StyledContact = styled.section`
                 border: none;
                 border-bottom: 1px solid gainsboro;
                 outline: none;
+                cursor: pointer;
                 transition: all .6s;
 
                 color: black;
@@ -57,22 +58,24 @@ const StyledContact = styled.section`
                 font-weight: 400;
 
                 &:valid {
-                    height: 36px;
+                    height: 32px;
                 }
 
-                &:hover {
-                    height: 36px;
+                &:focus,
+                &:active {
+                    height: 32px;
 
                     border-bottom: 1px solid black;
                 }
             }
 
             & textarea {
-                height: 120px;
+                height: 80px;
 
-                &:hover,
+                &:focus,
+                &:active,
                 &:valid {
-                    height: 120px;
+                    height: 80px;
                 }
             }
         }
@@ -91,11 +94,14 @@ const StyledContact = styled.section`
                 border: none;
                 border-radius: 40px;
                 outline: none;
+                cursor: pointer;
                 transition: all .6s;
 
                 color: white;
                 font-size: 16px;
-                font-weight: 300;
+                font-weight: 400;
+                text-transform: uppercase;
+                letter-spacing: 2px;
 
                 &:hover {
                     background-color: var(--colorPrincipal);
@@ -108,6 +114,7 @@ const StyledContact = styled.section`
     }
 
     & section {
+        width: 100%;
         height: max-content;
         margin-top: 40px;
         padding: 40px 20px;
@@ -146,7 +153,7 @@ const StyledContact = styled.section`
                 }
 
                 &:hover {
-                    color: white;
+                    color: gray;
                 }
             }
 
@@ -172,15 +179,48 @@ const StyledContact = styled.section`
                     }
 
                     & svg {
+                        transition: all .6s;
+
                         color: black;
                         font-size: 16px;
                     }
 
                     &:hover svg {
-                        color: white;
+                        color: gray;
                     }
                 } 
             }
+        }
+    }
+
+    @media only screen and (min-width: 768px) {
+        flex-direction: row-reverse;
+
+        & form {
+            width: 50%;
+            margin-top: 0;
+            padding-bottom: 20px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        & section {
+            width: 50%;
+            height: 100vh;
+            margin-top: 0;
+        }
+    }
+
+    @media only screen and (min-width: 1024px) {
+        & form {
+            padding: 0 80px 80px 80px;
+        }
+
+        & section {
+            padding-right: 80px;
+            padding-bottom: 80px;
         }
     }
 `;

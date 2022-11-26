@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import {
@@ -7,7 +7,7 @@ import {
 import logo from '../assets/logo.png';
 
 const StyledHeader = styled.header`
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     z-index: 10;
@@ -16,12 +16,15 @@ const StyledHeader = styled.header`
     height: max-content;
     padding: 20px;
 
+    @media only screen and (min-width: 1024px) {
+        padding: 20px 80px;
+    }
+
     @media only screen and (min-width: 1200px) {
         padding: 20px 120px;
     }
 
-    background-color: white;
-    border-bottom: 1px solid gainsboro;
+    background-color: transparent;
     transition: all .6s;
 
     & nav {
