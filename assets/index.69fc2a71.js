@@ -318,6 +318,7 @@ Error generating stack: `+o.message+`
                 background-color: white;
                 border: none;
                 border-bottom: 1px solid gainsboro;
+                border-radius: 0;
                 outline: none;
                 cursor: pointer;
                 transition: all .6s;
