@@ -58,10 +58,7 @@ const StyledContact = styled.section`
                 font-size: 16px;
                 font-weight: 400;
 
-                &:valid {
-                    height: 32px;
-                }
-
+                &:hover,
                 &:focus,
                 &:active {
                     height: 32px;
@@ -73,9 +70,9 @@ const StyledContact = styled.section`
             & textarea {
                 height: 80px;
 
+                &:hover,
                 &:focus,
-                &:active,
-                &:valid {
+                &:active {
                     height: 80px;
                 }
             }
