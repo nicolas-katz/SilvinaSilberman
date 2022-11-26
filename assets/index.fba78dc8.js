@@ -327,10 +327,7 @@ Error generating stack: `+o.message+`
                 font-size: 16px;
                 font-weight: 400;
 
-                &:valid {
-                    height: 32px;
-                }
-
+                &:hover,
                 &:focus,
                 &:active {
                     height: 32px;
@@ -342,9 +339,9 @@ Error generating stack: `+o.message+`
             & textarea {
                 height: 80px;
 
+                &:hover,
                 &:focus,
-                &:active,
-                &:valid {
+                &:active {
                     height: 80px;
                 }
             }
@@ -570,4 +567,4 @@ Error generating stack: `+o.message+`
         }
       }
     }
-`;function jv(){return ne(Av,{children:[z("img",{src:Vd,alt:"Silvina Silberman"}),ne("h4",{children:["\xA9 2022 Silvina Silberman / ",z("a",{href:"mailto:silvinasilberman@gmail.com",children:"silvinasilberman@gmail.com"})]}),ne("div",{children:[z("a",{href:"/",children:z(Hd,{})}),z("a",{href:"/",children:z(Bd,{})})]})]})}function Mv(){return ne("div",{children:[z(Wd,{}),z(jv,{})]})}function Dv(){return ne(v0,{children:[z(vu,{path:"/",element:z(Mv,{})}),z(vu,{path:"/contacto",element:z(Iv,{})})]})}Si.createRoot(document.getElementById("root")).render(z(Pt.StrictMode,{children:z(x0,{children:z(Dv,{})})}));
+`;function jv(){return ne(Av,{children:[z("img",{src:Vd,alt:"Silvina Silberman"}),ne("h4",{children:["\xA9 2022 Silvina Silberman / ",z("a",{href:"mailto:silvinasilberman@gmail.com",children:"silvinasilberman@gmail.com"})]}),ne("div",{children:[z("a",{href:"/",children:z(Hd,{})}),z("a",{href:"/",children:z(Bd,{})})]})]})}function Mv(){return ne("div",{children:[z(Wd,{}),z("div",{style:{height:"1000px"}}),z(jv,{})]})}function Dv(){return ne(v0,{children:[z(vu,{path:"/",element:z(Mv,{})}),z(vu,{path:"/contacto",element:z(Iv,{})})]})}Si.createRoot(document.getElementById("root")).render(z(Pt.StrictMode,{children:z(x0,{children:z(Dv,{})})}));
