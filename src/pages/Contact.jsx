@@ -241,7 +241,7 @@ export default function Contact() {
                 }, 2500)
             }, (error) => {
                 console.log(error.text);
-            })
+            });
     };
 
     return (

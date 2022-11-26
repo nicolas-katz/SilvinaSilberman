@@ -1,21 +1,21 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Outfit', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', 'Roboto Slab', 'Montserrat', 'Inter Tight', 'Inter', 'Rubik', sans-serif;
 }
-
+  
 :root {
-  --colorPrincipal: rgb(206, 206, 245);
-  --colorSecundario: rgb(102, 91, 206);
-  --colorHover: rgb(61, 20, 116);
+    --colorPrincipal: #ad96eb;
+    --colorSecundario: rgb(96, 110, 192);
+    --colorHover: rgb(54, 50, 114);
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+    width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgb(221, 221, 221);
-  border-radius: 2px;
+    background-color: rgb(206, 206, 206);
+    border-radius: 10px;
 }
