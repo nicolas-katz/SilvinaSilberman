@@ -6,6 +6,7 @@ import {
     FaFacebookF
 } from 'react-icons/all';
 import emailjs from '@emailjs/browser';
+import { SERVICE_ID, TEMPLATE_ID, USER_ID } from '../constants/emailjs.constant';
 
 const StyledContact = styled.section`
     width: 100%;
@@ -28,13 +29,23 @@ const StyledContact = styled.section`
         }
 
         & div {
+            position: relative;
             width: 100%;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
 
             display: flex;
             flex-direction: column;
 
             & label {
+                position: absolute;
+                bottom: 10px;
+
+                &.onchange {
+                    top: -12px;
+                }
+
+                transition: all .6s;
+
                 color: black;
                 font-size: 14px;
                 font-weight: 400;
@@ -43,7 +54,7 @@ const StyledContact = styled.section`
             & input,
             & textarea {
                 width: 100%;
-                height: 4px;
+                height: 32px;
                 margin-top: 10px;
 
                 background-color: white;
@@ -58,23 +69,14 @@ const StyledContact = styled.section`
                 font-size: 16px;
                 font-weight: 400;
 
-                &:hover,
                 &:focus,
                 &:active {
-                    height: 32px;
-
                     border-bottom: 1px solid black;
                 }
             }
 
             & textarea {
                 height: 80px;
-
-                &:hover,
-                &:focus,
-                &:active {
-                    height: 80px;
-                }
             }
         }
 
@@ -151,7 +153,8 @@ const StyledContact = styled.section`
                 }
 
                 &:hover {
-                    color: gray;
+                    opacity: .8;
+                    color: black;
                 }
             }
 
@@ -184,7 +187,9 @@ const StyledContact = styled.section`
                     }
 
                     &:hover svg {
-                        color: gray;
+                        opacity: .8;
+
+                        color: black;
                     }
                 } 
             }
@@ -229,7 +234,7 @@ export default function Contact() {
     const sendEmail = (e) => {
         e.preventDefault();
 
-        emailjs.sendForm('service_e6bwg0p', 'template_3z9pvpj', form.current, 'hwH8wj1eN-3bQW7te')
+        emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, USER_ID)
             .then(() => {
                 document.querySelector("form button").classList.add("send__mail");
                 document.querySelector("form button").innerHTML = `Enviado`;
@@ -240,6 +245,14 @@ export default function Contact() {
             }, (error) => {
                 console.log(error.text);
             });
+    };
+
+    const handleChange = (e) => {
+        if(e.target.value.length > 0) {
+            e.target.parentNode.children[0].classList.add('onchange');
+        } else {
+            e.target.parentNode.children[0].classList.remove('onchange');
+        }
     };
 
     return (
@@ -257,6 +270,7 @@ export default function Contact() {
                             Nombre
                         </label>
                         <input 
+                            onChange={handleChange}
                             type='text' 
                             name='name' 
                             id='name' 
@@ -272,6 +286,7 @@ export default function Contact() {
                             Email
                         </label>
                         <input 
+                            onChange={handleChange}
                             type='email' 
                             name='email' 
                             id='email' 
@@ -287,6 +302,7 @@ export default function Contact() {
                             Mensaje
                         </label>
                         <textarea 
+                            onChange={handleChange}
                             type='text' 
                             name='message' 
                             id='message' 
@@ -302,13 +318,13 @@ export default function Contact() {
                     <h4>Hablemos.</h4>
                     <div>
                         <a href='mailto:silvinasilberman@gmail.com'>silvinasilberman@gmail.com</a>
-                        <a href='/'>+54 9 1168750959</a>
+                        <a href='https://api.whatsapp.com/send?phone=+5491168750959&text=¡Hola%20Silvi!%20Quiero%20mi%20retrato!!' target="_blank" rel="noopener noreferrer">+54 9 1168750959</a>
                     </div>
                     <div>
                         <h5>Redes sociales</h5>
                         <span>
-                            <a href='/'><BsInstagram /></a>
-                            <a href='/'><FaFacebookF /></a>
+                            <a href='https://www.instagram.com/silvisilberarte/' target="_blank" rel="noopener noreferrer"><BsInstagram /></a>
+                            <a href='https://www.facebook.com/silvina.silber' target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
                         </span>
                     </div>
                 </section>

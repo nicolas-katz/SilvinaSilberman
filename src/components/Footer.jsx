@@ -38,6 +38,8 @@ const StyledFooter = styled.footer`
     width: 100px;
 
     object-fit: contain;
+
+    cursor: pointer;
   }
 
   & h4 {
@@ -86,19 +88,28 @@ const StyledFooter = styled.footer`
 `;
 
 export default function Footer() {
-  return (
-    <StyledFooter>
-      <img 
-        src={logo} 
-        alt='Silvina Silberman' 
-      />
-      <h4>
-        © 2022 Silvina Silberman / <a href='mailto:silvinasilberman@gmail.com'>silvinasilberman@gmail.com</a>
-      </h4>
-      <div>
-        <a href='/'><BsInstagram /></a>
-        <a href='/'><FaFacebookF /></a>
-      </div>
-    </StyledFooter>
-  );
+    const handleTop = () => {
+      window.scroll({
+        top: 0, 
+        left: 0, 
+        behavior: 'smooth' 
+       });
+    };
+
+    return (
+      <StyledFooter>
+        <img 
+          onClick={handleTop}
+          src={logo} 
+          alt='Silvina Silberman' 
+        />
+        <h4>
+          © 2022 Silvina Silberman / Develop by <a href='https://www.linkedin.com/in/nicokatz/' target="_blank" rel="noopener noreferrer">Nicolas Katz</a>
+        </h4>
+        <div>
+          <a href='https://www.instagram.com/silvisilberarte/' target="_blank" rel="noopener noreferrer"><BsInstagram /></a>
+          <a href='https://www.facebook.com/silvina.silber' target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
+        </div>
+      </StyledFooter>
+    );
 };

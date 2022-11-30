@@ -6,9 +6,9 @@
 }
   
 :root {
-    --colorPrincipal: #ad96eb;
-    --colorSecundario: rgb(96, 110, 192);
-    --colorHover: rgb(54, 50, 114);
+    --colorPrincipal: #e9d669;
+    --colorSecundario: rgb(219, 98, 98);
+    --colorHover: #ccb325;
 }
 
 ::-webkit-scrollbar {
