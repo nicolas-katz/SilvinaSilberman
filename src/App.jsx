@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { AppContext } from './context/AppContext';
-import { Route, Routes, redirect } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { ADMIN_EMAIL, ADMIN_PASSWORD } from './constants/adminAuth.constant';
 
 import Admin from './pages/Admin';
@@ -10,12 +10,12 @@ import Login from './pages/Login';
 import ProductDetails from './pages/ProductDetails';
 
 export default function App() {
-    const { createAdminUser, userEmail, isLogged } = useContext(AppContext);
+    const { createAdminUser, user } = useContext(AppContext);
 
     useEffect(() => {
       const verifiedAdminUser = async () => {
         try {
-          if(userEmail == ADMIN_EMAIL) { 
+          if(!user?.email || user?.email != ADMIN_EMAIL) { 
             return await createAdminUser(ADMIN_EMAIL, ADMIN_PASSWORD);
           }
         } catch(error) {
@@ -36,21 +36,17 @@ export default function App() {
               path='/coleccion/:productId' 
               element={<ProductDetails />} />
             <Route 
-              path='/contacto' 
+              path='/contact' 
               element={<Contact />} 
             />
-            {
-              !isLogged ? <Route 
-                path='/login' 
-                element={<Login />} 
-              /> : redirect('/admin')
-            }
-            { 
-              isLogged ? <Route 
-                path='/admin' 
-                element={<Admin />} 
-              /> : redirect('/login')
-            }
+            <Route 
+              path='/login' 
+              element={<Login />} 
+            />
+            <Route 
+              path='/admin' 
+              element={<Admin />}
+            />
           </Routes>  
     );
 };

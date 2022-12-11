@@ -1,28 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import {
-    TfiClose
-} from 'react-icons/all';
 import logo from '../assets/logo.png';
 
 const StyledHeader = styled.header`
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 10;
 
     width: 100%;
     height: max-content;
-    padding: 20px;
-
-    @media only screen and (min-width: 1024px) {
-        padding: 20px 80px;
-    }
-
-    @media only screen and (min-width: 1200px) {
-        padding: 20px 120px;
-    }
+    padding: 10px 20px;
 
     background-color: transparent;
     transition: all .6s;
@@ -44,7 +33,7 @@ const StyledHeader = styled.header`
         & ul {
             position: fixed;
             top: 0;
-            right: -4000px;
+            right: -2000px;
 
             width: 100%;
             height: 100vh;
@@ -55,91 +44,46 @@ const StyledHeader = styled.header`
             justify-content: center;
 
             background-color: white;
-            transition: all 2s;
 
-            & a {
-                width: max-content;
-                margin: 6px 0;
+            text-align: center;
 
-                transition: all .6s;
-
-                color: black;
-                font-size: 24px;
-                font-weight: 300;
-                text-align: center;
-                text-decoration: none;
-
-                &:hover {
-                    color: var(--colorHover);
-                }
-
-                @media only screen and (min-width: 768px) {
-                    margin: 8px 0;
-
-                    font-size: 30px;
-                }
-
-                & li {
-                    list-style: none;
-                }
-            }
-
-            & div {
+            & .data__header__mobile {
                 width: 100%;
-                margin-top: 30px;
-                padding-top: 30px;
-
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-
-                @media only screen and (min-width: 768px) {
-                    margin-top: 42px;
-                    padding-top: 42px;
-
-                    flex-direction: row;   
-
-                    & h4 {
-                        margin: 0 40px !important;
-
-                        font-size: 14px !important;
-
-                        & a {
-                            margin-top: 20px !important;
-
-                            font-size: 18px !important;
-                        }
-                    }
-                }
+                margin-top: 40px;
+                padding-top: 40px;
 
                 border-top: 1px solid gainsboro;
 
-                & h4 {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-around;
+
+                & div {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
 
-                    color: gray;
-                    font-size: 12px;
-                    font-weight: 500;
-                    letter-spacing: 2px;
-
-                    &:last-child {
-                        margin-top: 20px;
+                    & h5 {
+                        margin-bottom: 10px;
+                        
+                        color: grey;
+                        font-size: 12px;
+                        font-weight: 500;
+                        text-transform: uppercase;
+                        letter-spacing: 2px;
                     }
 
                     & a {
-                        margin-top: 8px;
+                        width: max-content;
 
                         transition: all .6s;
-                            
+
                         color: black;
                         font-size: 16px;
                         font-weight: 400;
                         text-decoration: none;
-                        letter-spacing: 0;
 
                         &:hover {
                             color: var(--colorHover);
@@ -148,70 +92,160 @@ const StyledHeader = styled.header`
                 }
             }
 
-            & svg {
-                position: absolute;
-                top: 20px;
-                right: 20px;
+            & li {
+                margin: 14px 0;
+                
+                list-style: none;
 
-                @media only screen and (min-width: 1200px) {
-                    top: 80px;
-                    right: 120px;
+                & a {
+                    width: max-content;
+
+                    transition: all .6s;
+                    cursor: pointer;
+
+                    color: black;
+                    font-size: 18px;
+                    font-weight: 400;
+                    text-decoration: none;
                 }
-
-                cursor: pointer;
-
-                color: black;
-                font-size: 24px;
+                
+                &:hover a { 
+                    color: var(--colorHover);
+                }
             }
         }
 
-        & div.menu {
-            width: max-content;
-            height: max-content;
-
+        & .burger__menu {            
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
+            align-items: center;
             justify-content: center;
 
             cursor: pointer;
-            transition: all 1s;
 
             & span {
-                width: 48px;
+                width: 32px;
                 height: 1px;
-                margin: 2px 0;
+                margin: 4px 0;
 
                 background-color: black;
+            }
+
+            @media only screen and (min-width: 1024px) {
+                display: none;
             }
         }
     }
 
-    &.active {
+    &.add__scroll__effect:not(.open__menu) {
+        background-color: white;
+
+        & nav {
+            & ul {
+                & li {
+                    & a {
+                        color: black;
+                    }
+                }
+            }
+        }
+    }
+
+    &.open__menu {
         & nav {
             & ul {
                 right: 0;
-
-                transition: all 1s;
             }
 
-            & div.menu {
-                display: none;
+            & .burger__menu {
+                position: fixed;
+                top: 40px;
+                right: 20px;
+                z-index: 10;
 
-                transition: all 2s;
+                & span {
+                    width: 28px;
+                    margin: 0;
+
+                    background-color: black;
+
+                    transform: rotate(120deg);
+
+                    &:last-child {
+                        transform: rotate(-120deg);
+                    }
+                }
             }
+        }
+    }
+
+    @media only screen and (min-width: 1024px) {
+        & nav {
+            & a img {
+                width: 120px;
+            }
+            
+            & ul {
+                position: unset;
+
+                width: 100%;
+                height: max-content;
+
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-end;
+
+                background-color: transparent;
+
+                text-align: left;
+
+                & .data__header__mobile {
+                    display: none;
+                }
+
+                & li {
+                    margin: 0;
+                    margin-left: 64px;
+                    
+                    & a {
+                        color: black;
+                        font-size: 16px;
+                        font-weight: 400;
+                    }
+                }
+            }
+        }
+    }
+
+    @media only screen and (min-width: 1200px) {
+        padding: 60px 100px;
+
+        &.add__scroll__effect {
+            padding: 20px 100px;
         }
     }
 `;
 
 export default function Header() {
-    const handleOpenMenu = () => {
-        document.querySelector('header').classList.add('active');
-    };
+    useEffect(()=> {
+        window.addEventListener('scroll', ()=> {
+            if(window.scrollY >= 300 || window.scrollY) {
+                document.querySelector('header').classList.add('add__scroll__effect');
+            } else {
+                document.querySelector('header').classList.remove('add__scroll__effect');
+            }
+        })
+    }, [window.scrollY]);
 
-    const handleCloseMenu = () => {
-        document.querySelector('header').classList.remove('active');
-    };
+    const handleOpenMenu = () => {
+        document.querySelector('header').classList.toggle('open__menu');
+    }
+
+    const handleOpenMenuByLinks = () => {
+        document.querySelectorAll('ul li').forEach(() => {
+            document.querySelector('header').classList.remove('open__menu');
+        });
+    }
 
     return (
         <StyledHeader>
@@ -219,30 +253,39 @@ export default function Header() {
                 <NavLink to='/'>
                     <img 
                         src={logo} 
-                        alt='Silvina Silberman' 
+                        alt="Silvina Silberman" 
                     />
                 </NavLink>
-                <ul>
-                    <NavLink onClick={handleCloseMenu} to="/"><li>Home</li></NavLink>
-                    <NavLink onClick={handleCloseMenu} to="/sobre-mi"><li>Sobre mi</li></NavLink>
-                    <NavLink onClick={handleCloseMenu} to="/premios"><li>Premios</li></NavLink>
-                    <NavLink onClick={handleCloseMenu} to="/contacto"><li>Contacto</li></NavLink>
-
-                    <div>
-                        <h4>
-                            EMAIL
-                            <a href='mailto:silvinasilberman@gmail.com'>silvinasilberman@gmail.com</a>
-                        </h4>
-                        <h4>
-                            EMPEZA UN PROYECTO
-                            <NavLink onClick={handleCloseMenu} to="/contacto">Contactame</NavLink>
-                        </h4>
+                <ul>                    
+                    <li onClick={handleOpenMenuByLinks}>
+                        <NavLink to='/'>Inicio</NavLink>
+                    </li>
+                    <li onClick={handleOpenMenuByLinks}>
+                        <NavLink to='/about'>Sobre mi</NavLink>
+                    </li>
+                    <li onClick={handleOpenMenuByLinks}>
+                        <NavLink to='/awards'>Premios</NavLink>
+                    </li>
+                    <li onClick={handleOpenMenuByLinks}>
+                        <NavLink to='/contact'>Contacto</NavLink>    
+                    </li>
+                    <li onClick={handleOpenMenuByLinks}>
+                        <NavLink to='/login'>Acceso</NavLink>    
+                    </li>
+                    <div className='data__header__mobile'>
+                        <div>
+                            <h5>Email</h5>
+                            <a href='mailto:silvinasilberman@gmail.com' target='_blank' rel="noopener noreferrer">silvinasilberman@gmail.com</a>
+                        </div>
+                        <div>
+                            <h5>Empezar proyecto</h5>
+                            <NavLink to='/contact'>Contactame</NavLink>
+                        </div>
                     </div>
-
-                    <TfiClose onClick={handleCloseMenu} />
                 </ul>
-                <div className='menu' onClick={handleOpenMenu}>
-                    <span></span>
+                <div 
+                    className="burger__menu"
+                    onClick={handleOpenMenu}>
                     <span></span>
                     <span></span>
                 </div>

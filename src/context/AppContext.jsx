@@ -8,7 +8,13 @@ import {
     doc, 
     deleteDoc 
 } from 'firebase/firestore';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword,
+    sendPasswordResetEmail,
+    onAuthStateChanged,
+    signOut
+} from 'firebase/auth';
 import { auth } from '../firebase';
 
 export const AppContext = createContext();
@@ -59,29 +65,43 @@ export function AppContextProvider(props) {
         console.log('Producto creado.')
     };
 
-    // Update old product
+    // Update product
     const updateProduct = async (id, data) => {
         const userDoc = doc(db, 'products', id);
         await updateDoc(userDoc, data);
     };
 
-    // Delete old product
+    // Delete product
     const deleteProduct = async (id) => {
         const userDoc = doc(db, 'products', id);
         await deleteDoc(userDoc);
     };
 
     // Create admin user
-    const [userEmail, setUserEmail] = useState('');
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const createAdminUser = async (email, password) =>  { 
-        const userData = await createUserWithEmailAndPassword(auth, email, password);
-        setUserEmail(userData.user.email);
+        await createUserWithEmailAndPassword(auth, email, password);
     };
 
     // Login for admin user
-    const [isLogged, setIsLogged] = useState(false);
     const loginAdminUser = (email, password) => signInWithEmailAndPassword(auth, email, password);
+
+    // Reset password email
+    const resetPassword = async (email) => sendPasswordResetEmail(auth, email);
+
+    // Logout
+    const logout = () => signOut(auth);
+
+    useEffect(() => {
+        const unsubuscribe = onAuthStateChanged(auth, (currentUser) => {
+          setUser(currentUser);
+          setLoading(false);
+        });
+
+        return () => unsubuscribe();
+      }, []);
 
     return (
         <AppContext.Provider 
@@ -100,10 +120,11 @@ export function AppContextProvider(props) {
                 updateProduct,
                 deleteProduct,
                 createAdminUser,
-                userEmail,
                 loginAdminUser,
-                setIsLogged,
-                isLogged
+                resetPassword,
+                logout,
+                user,
+                loading
             }}>
             {props.children}
         </AppContext.Provider>

@@ -8,7 +8,6 @@ export default function ProductItem({ product }) {
         <NavLink to={`/coleccion/${id}`}>
             <h1>{title}</h1>
             <p>{description}</p>
-            <p>{id}</p>
         </NavLink>
     );
 };
