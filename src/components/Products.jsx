@@ -6,7 +6,8 @@ import styled from 'styled-components';
 const StyledProducts = styled.section`
     width: 100%;
     height: max-content;
-    padding: 40px 20px;
+    margin: 40px 0;
+    padding: 0 20px;
 
     display: flex;
     flex-direction: column;
@@ -55,14 +56,16 @@ const StyledProducts = styled.section`
         justify-content: space-between;
 
         & a {
-            & h1 {
-                color: black;
-                font-size: 20px;
-            }
+            width: 100%;
+            height: 360px;
 
-            & p {
-                color: black;
-                font-size: 20px;
+            & img {
+                width: 100%;
+                height: 100%;
+
+                object-fit: cover;
+
+                border-radius: 1px;
             }
         }
     }
@@ -108,11 +111,12 @@ const StyledProducts = styled.section`
 
 export default function Products() {
     const { products } = useContext(AppContext);
+    const [data, setData] = useState([]);
 
     useEffect(() => {
         setTimeout(() => {
-            products;
-        }, 2000)
+            setData(products);
+        }, 1500)
     }, []);
 
     const handleClick = (e) => {
@@ -120,19 +124,22 @@ export default function Products() {
     
         switch(op) {
           case 'all':
+                setData(products);
                 document.querySelectorAll('button').forEach((btn)=> btn.classList.remove('active'));
                 e.target.classList.add("active");
-                return products;
+                break;
     
           case 'birome':
+                setData(products.filter((product) => product.category === op));
                 document.querySelectorAll('button').forEach((btn)=> btn.classList.remove('active'));
                 e.target.classList.add("active");
-                return products.filter((product) => product.category === op);
+                break;
     
           case 'color':
+                setData(products.filter((product) => product.category === op));
                 document.querySelectorAll('button').forEach((btn)=> btn.classList.remove('active'));
                 e.target.classList.add("active");
-                return products.filter((product) => product.category === op);
+                break;
     
           default:
                 break;
@@ -176,12 +183,14 @@ export default function Products() {
             </div>
             <div className='portfolio'>
                 {
-                    products.map((product) => {
-                        <ProductItem 
-                            key={product.id} 
-                            product={product} 
-                        />
-                    })
+                    data.length > 0 ? data.map((product) => {
+                        return(
+                            <ProductItem 
+                                key={product.id} 
+                                product={product} 
+                            />
+                        )
+                    }) : <h1>Cargando productos...</h1>
                 }
             </div>
         </StyledProducts>

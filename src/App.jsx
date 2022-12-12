@@ -8,6 +8,8 @@ import Contact from './pages/Contact';
 import Index from './pages/Index';
 import Login from './pages/Login';
 import ProductDetails from './pages/ProductDetails';
+import { ProtectedAdmin, ProtectedLogin } from './ProtectedRoutes';
+import NotFound from './pages/NotFound';
 
 export default function App() {
     const { createAdminUser, user } = useContext(AppContext);
@@ -19,7 +21,9 @@ export default function App() {
             return await createAdminUser(ADMIN_EMAIL, ADMIN_PASSWORD);
           }
         } catch(error) {
-          console.error(error.message);
+            if(error.message == 'Firebase: Error (auth/email-already-in-use).') {
+              console.error('Administrador ya registrado.')
+            }
         }
       };
   
@@ -34,18 +38,31 @@ export default function App() {
             />
             <Route 
               path='/coleccion/:productId' 
-              element={<ProductDetails />} />
+              element={<ProductDetails />} 
+            />
             <Route 
               path='/contact' 
               element={<Contact />} 
             />
             <Route 
               path='/login' 
-              element={<Login />} 
+              element={
+                <ProtectedLogin>
+                  <Login />
+                </ProtectedLogin>
+              } 
             />
             <Route 
               path='/admin' 
-              element={<Admin />}
+              element={
+                <ProtectedAdmin>
+                  <Admin />
+                </ProtectedAdmin>
+              }
+            />
+            <Route 
+              path='/*' 
+              element={<NotFound />} 
             />
           </Routes>  
     );

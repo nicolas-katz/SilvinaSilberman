@@ -175,7 +175,7 @@ export default function Login() {
     const { loginAdminUser, resetPassword } = useContext(AppContext);
     const navigate = useNavigate();
 
-    const [user, setUser] = useState({
+    const [admin, setAdmin] = useState({
         email: '',
         password: ''
     });
@@ -183,14 +183,14 @@ export default function Login() {
     const [error, setError] = useState('');
 
     const handleChange = ({ target: { name, value }} ) => {
-        setUser({ ...user, [name]: value });
+        setAdmin({ ...admin, [name]: value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         try {
-            await loginAdminUser(user.email, user.password);
+            await loginAdminUser(admin.email, admin.password);
             console.log('Login autorizado.')
             navigate('/admin');
         } catch (err) {
@@ -213,9 +213,9 @@ export default function Login() {
     };
 
     const handleResetPassword = async () => {
-        if (!user.email) return setError("Escribe tu correo en la casilla para resetear tu contraseña.");
+        if (!admin.email) return setError("Escribe tu correo en la casilla para resetear tu contraseña.");
         try {
-          await resetPassword(user.email);
+          await resetPassword(admin.email);
           setError('Te enviamos un email a tu correo para que puedas resetear tu contraseña.')
         } catch (err) {
             setError('Ocurrio un error. No pudimos resetear tu contraseña. Vuelve a intentarlo.');

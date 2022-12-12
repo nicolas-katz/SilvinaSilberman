@@ -37,31 +37,11 @@ export function AppContextProvider(props) {
         }
 
         getProducts();
-    }, [products]);
+    }, []);
 
     // Create new product
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [category, setCategory] = useState('');
-    const [award, setAward] = useState(false);
-    const [duration, setDuration] = useState(0);
-    const [price, setPrice] = useState(0);
-    const [status, setStatus] = useState('');
-    const [finishedAt, setFinishedAt] = useState('');
-    const [image, setImage] = useState('');
-
-    const createProduct = async () => {
-        await addDoc(productsCollection, {
-            title,
-            description,
-            category,
-            award,
-            duration,
-            price,
-            status,
-            finishedAt,
-            image
-        });
+    const createProduct = async (product_data) => {
+        await addDoc(productsCollection, product_data);
         console.log('Producto creado.')
     };
 
@@ -86,18 +66,27 @@ export function AppContextProvider(props) {
     };
 
     // Login for admin user
-    const loginAdminUser = (email, password) => signInWithEmailAndPassword(auth, email, password);
+    const loginAdminUser = (email, password) =>  { 
+        signInWithEmailAndPassword(auth, email, password)
+    };
 
     // Reset password email
     const resetPassword = async (email) => sendPasswordResetEmail(auth, email);
 
     // Logout
-    const logout = () => signOut(auth);
+    const logout = () =>  { 
+        signOut(auth);
+    };
 
     useEffect(() => {
         const unsubuscribe = onAuthStateChanged(auth, (currentUser) => {
           setUser(currentUser);
           setLoading(false);
+          if (currentUser !== null) {
+            localStorage.setItem('user', JSON.stringify(currentUser));
+          } else {
+            localStorage.removeItem('user');
+          }
         });
 
         return () => unsubuscribe();
@@ -108,15 +97,6 @@ export function AppContextProvider(props) {
             value={{
                 products,
                 createProduct,
-                setTitle,
-                setDescription,
-                setCategory,
-                setAward,
-                setDuration,
-                setPrice,
-                setStatus,
-                setFinishedAt,
-                setImage,
                 updateProduct,
                 deleteProduct,
                 createAdminUser,

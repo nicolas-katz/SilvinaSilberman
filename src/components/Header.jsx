@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../assets/logo.png';
+import { AppContext } from '../context/AppContext';
 
 const StyledHeader = styled.header`
     position: fixed;
@@ -227,6 +228,8 @@ const StyledHeader = styled.header`
 `;
 
 export default function Header() {
+    const { user } = useContext(AppContext);
+    
     useEffect(()=> {
         window.addEventListener('scroll', ()=> {
             if(window.scrollY >= 300 || window.scrollY) {
@@ -270,7 +273,7 @@ export default function Header() {
                         <NavLink to='/contact'>Contacto</NavLink>    
                     </li>
                     <li onClick={handleOpenMenuByLinks}>
-                        <NavLink to='/login'>Acceso</NavLink>    
+                        <NavLink to={user ? '/admin' : '/login'}>Acceso</NavLink>    
                     </li>
                     <div className='data__header__mobile'>
                         <div>
