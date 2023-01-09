@@ -4,13 +4,13 @@ import Footer from '../components/Footer';
 import styled from 'styled-components';
 import emailjs from '@emailjs/browser';
 import { SERVICE_ID, TEMPLATE_ID, USER_ID } from '../constants/emailjs.constant';
-import foto__contacto from '../assets/foto__contacto.jpg';
+import foto__contacto from '../assets/contact.jpeg';
 
 const StyledContact = styled.section`
     width: 100%;
     height: max-content;
-    margin-bottom: 60px;
-    padding: 100px 20px;
+    margin-top: 40px;
+    padding: 40px 20px;
 
     display: flex;
     flex-direction: column;
@@ -30,7 +30,7 @@ const StyledContact = styled.section`
                 color: black;
                 font-size: 26px;
                 line-height: 36px;
-                font-weight: 400;
+                font-weight: 500;
                 text-transform: uppercase;
                 letter-spacing: 2px;
             }
@@ -123,7 +123,7 @@ const StyledContact = styled.section`
 
                 color: white;
                 font-size: 14px;
-                font-weight: 400;
+                font-weight: 600;
                 text-transform: uppercase;
                 letter-spacing: 4px;
 
@@ -140,18 +140,19 @@ const StyledContact = styled.section`
 
     & div:last-child {
         width: 100%;
-        height: 360px;
+        height: max-content;
         margin-top: 40px;
 
         & img {
             width: 100%;
-            height: 100%;
+            height: 380px;
             margin-bottom: 20px;
 
             object-fit: cover;
+            image-rendering: optimizeQuality;
 
             border: none;
-            border-radius: 1px;
+            border-radius: 2px;
         }
 
         & h4 {
@@ -163,8 +164,7 @@ const StyledContact = styled.section`
     }
 
     @media only screen and (min-width: 768px) {
-        margin-bottom: 0;
-        padding: 100px 20px 40px 20px;
+        padding: 40px 20px;
 
         flex-direction: row;
         justify-content: space-between;
@@ -199,11 +199,23 @@ const StyledContact = styled.section`
         & div:last-child {
             width: 45%;
             margin-top: 0;
+
+            img {
+                height: 420px;
+            }
+        }
+    }
+
+    @media only screen and (min-width: 1024px) {
+        & div:last-child {
+            img {
+                height: 520px;
+            }
         }
     }
 
     @media only screen and (min-width: 1200px) {
-        padding: 160px 100px 40px 100px;
+        padding: 40px 100px;
 
         & div:last-child {
             width: 40%;
@@ -310,7 +322,7 @@ export default function Contact() {
                 </div>
                 <div>
                     <img src={foto__contacto} alt='Silvina Silberman' />
-                    <h4>Actualmente, me encuentro trabajando para CABA (Ciudad Autonoma de Buenos Aires, Argentina) y alrededores.</h4>
+                    <h4>Actualmente, me encuentro trabajando en CABA pero realizo encargo a todo el país.</h4>
                 </div>
             </StyledContact>
             <Footer />

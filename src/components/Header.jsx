@@ -1,8 +1,7 @@
-import React, { useEffect, useContext } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../assets/logo.png';
-import { AppContext } from '../context/AppContext';
 
 const StyledHeader = styled.header`
     position: fixed;
@@ -14,7 +13,7 @@ const StyledHeader = styled.header`
     height: max-content;
     padding: 10px 20px;
 
-    background-color: transparent;
+    background-color: white;
     transition: all .6s;
 
     & nav {
@@ -71,7 +70,7 @@ const StyledHeader = styled.header`
                         
                         color: grey;
                         font-size: 12px;
-                        font-weight: 500;
+                        font-weight: 600;
                         text-transform: uppercase;
                         letter-spacing: 2px;
                     }
@@ -83,7 +82,7 @@ const StyledHeader = styled.header`
 
                         color: black;
                         font-size: 16px;
-                        font-weight: 400;
+                        font-weight: 500;
                         text-decoration: none;
 
                         &:hover {
@@ -106,8 +105,12 @@ const StyledHeader = styled.header`
 
                     color: black;
                     font-size: 18px;
-                    font-weight: 400;
+                    font-weight: 500;
                     text-decoration: none;
+
+                    &.active {
+                        color: var(--colorHover) !important;
+                    }
                 }
                 
                 &:hover a { 
@@ -118,36 +121,38 @@ const StyledHeader = styled.header`
 
         & .burger__menu {            
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            justify-content: center;
 
             cursor: pointer;
 
-            & span {
-                width: 32px;
-                height: 1px;
-                margin: 4px 0;
+            & h4 {
+                margin-right: 10px;
 
-                background-color: black;
+                color: black;
+                font-size: 14px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
+
+            & div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+
+                & span {
+                    width: 24px;
+                    height: 1px;
+                    margin: 4px 0;
+
+                    background-color: black;
+                }
             }
 
             @media only screen and (min-width: 1024px) {
                 display: none;
-            }
-        }
-    }
-
-    &.add__scroll__effect:not(.open__menu) {
-        background-color: white;
-
-        & nav {
-            & ul {
-                & li {
-                    & a {
-                        color: black;
-                    }
-                }
             }
         }
     }
@@ -164,8 +169,12 @@ const StyledHeader = styled.header`
                 right: 20px;
                 z-index: 10;
 
+                & h4 {
+                    display: none;
+                }
+
                 & span {
-                    width: 28px;
+                    width: 24px;
                     margin: 0;
 
                     background-color: black;
@@ -211,7 +220,7 @@ const StyledHeader = styled.header`
                     & a {
                         color: black;
                         font-size: 16px;
-                        font-weight: 400;
+                        font-weight: 500;
                     }
                 }
             }
@@ -219,27 +228,11 @@ const StyledHeader = styled.header`
     }
 
     @media only screen and (min-width: 1200px) {
-        padding: 60px 100px;
-
-        &.add__scroll__effect {
-            padding: 20px 100px;
-        }
+        padding: 20px 100px;
     }
 `;
 
 export default function Header() {
-    const { user } = useContext(AppContext);
-    
-    useEffect(()=> {
-        window.addEventListener('scroll', ()=> {
-            if(window.scrollY >= 300 || window.scrollY) {
-                document.querySelector('header').classList.add('add__scroll__effect');
-            } else {
-                document.querySelector('header').classList.remove('add__scroll__effect');
-            }
-        })
-    }, [window.scrollY]);
-
     const handleOpenMenu = () => {
         document.querySelector('header').classList.toggle('open__menu');
     }
@@ -264,7 +257,10 @@ export default function Header() {
                         <NavLink to='/'>Inicio</NavLink>
                     </li>
                     <li onClick={handleOpenMenuByLinks}>
-                        <NavLink to='/about'>Sobre mi</NavLink>
+                        <NavLink to='/about'>Sobre Mi</NavLink>
+                    </li>
+                    <li onClick={handleOpenMenuByLinks}>
+                        <NavLink to='/personal-designs'>Diseños Personalizados</NavLink>
                     </li>
                     <li onClick={handleOpenMenuByLinks}>
                         <NavLink to='/awards'>Premios</NavLink>
@@ -272,25 +268,25 @@ export default function Header() {
                     <li onClick={handleOpenMenuByLinks}>
                         <NavLink to='/contact'>Contacto</NavLink>    
                     </li>
-                    <li onClick={handleOpenMenuByLinks}>
-                        <NavLink to={user ? '/admin' : '/login'}>Acceso</NavLink>    
-                    </li>
                     <div className='data__header__mobile'>
                         <div>
                             <h5>Email</h5>
                             <a href='mailto:silvinasilberman@gmail.com' target='_blank' rel="noopener noreferrer">silvinasilberman@gmail.com</a>
                         </div>
                         <div>
-                            <h5>Empezar proyecto</h5>
-                            <NavLink to='/contact'>Contactame</NavLink>
+                            <h5>Instagram</h5>
+                            <a href='https://www.instagram.com/silvisilberarte/?hl=es-la' target='_blank' rel="noopener noreferrer">@silvisilberarte</a>
                         </div>
                     </div>
                 </ul>
                 <div 
                     className="burger__menu"
                     onClick={handleOpenMenu}>
-                    <span></span>
-                    <span></span>
+                    <h4>Menu</h4>
+                    <div>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </div>
             </nav>
         </StyledHeader>

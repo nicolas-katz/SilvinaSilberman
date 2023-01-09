@@ -26,8 +26,8 @@ const StyledNotFound = styled.div`
         margin: 20px 0;
 
         color: black;
-        font-size: 18px;
-        line-height: 28px;
+        font-size: 20px;
+        line-height: 30px;
         font-weight: 400;
     }
 
@@ -46,8 +46,8 @@ const StyledNotFound = styled.div`
         transition: all .6s;
 
         color: white;
-        font-size: 18px;
-        font-weight: 400;
+        font-size: 14px;
+        font-weight: 600;
         text-decoration: none;
         text-transform: uppercase;
         letter-spacing: 2px;

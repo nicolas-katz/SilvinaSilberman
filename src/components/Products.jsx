@@ -1,87 +1,118 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../context/AppContext';
-import ProductItem from './ProductItem';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { IoWarningOutline } from 'react-icons/all';
 
 const StyledProducts = styled.section`
     width: 100%;
     height: max-content;
-    margin: 40px 0;
-    padding: 0 20px;
+    margin-top: 20px;
+    padding: 40px 20px;
 
     display: flex;
     flex-direction: column;
 
-    & div.filters {
-        margin-top: 40px;
+    h1 {
+        margin-bottom: 36px;
+
+        color: black;
+        font-size: 42px;
+        line-height: 52px;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    & div.error__messages {
+        width: 100%;
+        height: max-content;
+        padding: 20px;
 
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+        flex-direction: column;
         align-items: center;
+        justify-content: center;
 
-        & button {
-            width: max-content;
-            height: max-content;
-            margin-right: 14px;
-            margin-bottom: 14px;
+        background-color: #e8b717;
+        border-radius: 2px;
 
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            outline: none;
-            transition: all .6s;
+        color: white;
+        font-size: 24px;
+        line-height: 34px;
+        font-weight: 400;
+        text-align: center;
 
-            color: black;
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        svg {
+            margin-bottom: 12px;
 
-            &.active {
-                color: var(--colorPrincipal);
+            color: white;
+            font-size: 36px;
+        }
+    }
+
+    @media only screen and (min-width: 540px) {
+        & div.error__messages {
+            flex-direction: row;
+            justify-content: space-between;
+
+            text-align: left;
+
+            svg {
+                min-width: max-content;
+                margin-bottom: 0;
+                margin-right: 20px;
             }
         }
     }
 
     & div.portfolio {
         width: 100%;
-        height: 100px;
-        margin-top: 20px;
+        height: max-content;
 
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
 
         & a {
             width: 100%;
-            height: 360px;
+            height: max-content;
+            margin: 1% 0;
+            padding: 10px;
+
+            border: 1px solid transparent;
+            transition: all .6s;
 
             & img {
                 width: 100%;
                 height: 100%;
 
-                object-fit: cover;
+                object-fit: contain;
+                image-rendering: optimizeQuality;
 
-                border-radius: 1px;
+                border-radius: 2px;
+            }
+
+            &:hover {
+                border: 1px solid gainsboro;
             }
         }
     }
 
     @media only screen and (min-width: 768px) {
-        & div.filters {
-            margin-top: 60px;
-
-            justify-content: space-between;
-        }
-
         & div.portfolio {
-            & img {
-                width: 32%;
-                height: 240px;
-                margin: 1% 0;
+            justify-content: space-between;
+            
+            & a {
+                width: 48%;
+                margin: 1%;
+
+                img {
+                    height: 420px;
+
+                    object-fit: cover;
+                }
             }
         }
     }
@@ -97,10 +128,6 @@ const StyledProducts = styled.section`
     @media only screen and (min-width: 1200px) {
         padding: 40px 100px;
 
-        & div.filters {
-            margin-top: 140px;
-        }
-
         & div.portfolio {
             & img {
                 height: 360px;
@@ -110,87 +137,40 @@ const StyledProducts = styled.section`
 `;
 
 export default function Products() {
-    const { products } = useContext(AppContext);
-    const [data, setData] = useState([]);
+    const { getProducts } = useContext(AppContext);
+    const [products, setProducts] = useState(null);
+    const [message, setMessage] = useState(null);
 
-    useEffect(() => {
-        setTimeout(() => {
-            setData(products);
-        }, 1500)
+    useEffect(()=> {
+        getProducts(setProducts);
+
+        if (!products) {
+            setMessage('Los productos estan siendo cargados a la web, espere un momento.');
+        } else if (products?.length === 0) {
+            setMessage('Lo siento no hay productos disponibles en este momento.');
+        } else {
+            setMessage(null);
+        };
     }, []);
-
-    const handleClick = (e) => {
-        const op = e.target.name;
-    
-        switch(op) {
-          case 'all':
-                setData(products);
-                document.querySelectorAll('button').forEach((btn)=> btn.classList.remove('active'));
-                e.target.classList.add("active");
-                break;
-    
-          case 'birome':
-                setData(products.filter((product) => product.category === op));
-                document.querySelectorAll('button').forEach((btn)=> btn.classList.remove('active'));
-                e.target.classList.add("active");
-                break;
-    
-          case 'color':
-                setData(products.filter((product) => product.category === op));
-                document.querySelectorAll('button').forEach((btn)=> btn.classList.remove('active'));
-                e.target.classList.add("active");
-                break;
-    
-          default:
-                break;
-        }
-    };
 
     return (
         <StyledProducts>
-            <div className='filters'>
-                <button 
-                    className='active'
-                    name='all' 
-                    onClick={handleClick}>
-                    Todos
-                </button>
-                <button 
-                    name='birome' 
-                    onClick={handleClick}>
-                    Birome
-                </button>
-                <button 
-                    name='color' 
-                    onClick={handleClick}>
-                    Color
-                </button>
-                <button 
-                    name='black&white' 
-                    onClick={handleClick}>
-                    Black & White
-                </button>
-                <button 
-                    name='famosos' 
-                    onClick={handleClick}>
-                    Famosos
-                </button>
-                <button 
-                    name='clasicos' 
-                    onClick={handleClick}>
-                    Clasicos
-                </button>
-            </div>
-            <div className='portfolio'>
+            <h1>Portfolio</h1>
+            <div className='portfolio' id='portfolio'>
                 {
-                    data.length > 0 ? data.map((product) => {
+                    products ? products.map(( product ) => {
                         return(
-                            <ProductItem 
-                                key={product.id} 
-                                product={product} 
-                            />
+                            <NavLink key={product.id} to={`/coleccion/${product.id}`}>
+                                <img 
+                                    src={product.primaryImage} 
+                                    alt={product.title} 
+                                />
+                            </NavLink>
                         )
-                    }) : <h1>Cargando productos...</h1>
+                    }) : <div className='error__messages'>
+                            <IoWarningOutline />
+                            { message }
+                        </div>
                 }
             </div>
         </StyledProducts>

@@ -9,6 +9,7 @@ import {
 const StyledLogin = styled.div`
     width: 100%;
     height: 100vh;
+    min-height: max-content;
     padding: 20px;
 
     display: flex;
@@ -172,7 +173,7 @@ const StyledLogin = styled.div`
 `;
 
 export default function Login() {
-    const { loginAdminUser, resetPassword } = useContext(AppContext);
+    const { loginAdminUser, resetPassword, user } = useContext(AppContext);
     const navigate = useNavigate();
 
     const [admin, setAdmin] = useState({
@@ -191,24 +192,30 @@ export default function Login() {
         setError('');
         try {
             await loginAdminUser(admin.email, admin.password);
-            console.log('Login autorizado.')
-            navigate('/admin');
-        } catch (err) {
-            console.log(err.message)
+            if (user.email === admin.email && user.password === admin.password) navigate('/admin');
+        } catch( err ) {
             switch (err.message) {
                 case 'Firebase: Error (auth/user-not-found).':
                     setError('Correo inexistente. Por favor revisa los campos.');
+                    console.error(error);
                     break;
                 case 'Firebase: Error (auth/email-invalid).':
                     setError('Correo invalido. Por favor revisa los campos.');
+                    console.error(error);
                     break;
                 case 'Firebase: Error (auth/wrong-password).':
                     setError('Contraseña erronea. Por favor revisa los campos.');
+                    console.error(error);
+                    break;
+                case 'FirebaseError: Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests).':
+                    setError('Demasiados intentos fallidos. Por favor vuelve a intentarlo más tarde.');
+                    console.error(error);
                     break;
                 default:
-                    setError('Ocurrio un error. Por favor vuelve a intentarlo.')
+                    setError('Ocurrio un error. Por favor vuelve a intentarlo.');
+                    console.error(error);
                     break;
-            }
+            };
         }
     };
 

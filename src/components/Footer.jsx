@@ -32,7 +32,7 @@ const StyledFooter = styled.footer`
     color: black;
     font-size: 16px;
     line-height: 26px;
-    font-weight: 400;
+    font-weight: 500;
     text-align: center;
 
     & a {
@@ -116,7 +116,7 @@ export default function Footer() {
           alt='Silvina Silberman' 
         />
         <h4>
-          © 2022 Silvina Silberman / <span>Develop by <a href='https://www.linkedin.com/in/nicokatz/' target="_blank" rel="noopener noreferrer">Nicolas Katz</a></span>
+          © 2023 Silvina Silberman / <span>Develop by <a href='https://www.linkedin.com/in/nicokatz/' target="_blank" rel="noopener noreferrer">Nicolas Katz</a></span>
         </h4>
         <div>
           <a href='https://www.instagram.com/silvisilberarte/' target="_blank" rel="noopener noreferrer"><BsInstagram /></a>

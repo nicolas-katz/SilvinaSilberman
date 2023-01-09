@@ -6,7 +6,9 @@ import {
     addDoc, 
     updateDoc, 
     doc, 
-    deleteDoc 
+    deleteDoc, 
+    getDoc,
+    onSnapshot
 } from 'firebase/firestore';
 import { 
     createUserWithEmailAndPassword, 
@@ -21,28 +23,27 @@ export const AppContext = createContext();
 
 export function AppContextProvider(props) {
     const productsCollection = collection(db, 'products');
-    
-    // Get all products
-    const [products, setProducts] = useState([]);
 
-    useEffect(() => {
-        const getProducts = async () => {
-            const data = await getDocs(productsCollection);
-            setProducts(data.docs.map((doc) => (
-                { 
-                    ...doc.data(), 
-                    id: doc.id
-                })
-            ))
-        }
+    // Create all products
+    const getProducts = async (state) => {
+        const data = await getDocs(productsCollection);
+        state(data.docs.map((doc) => (
+            { 
+                ...doc.data(), 
+                id: doc.id
+            })
+        ));
+    };
 
-        getProducts();
-    }, []);
+    // Create product by id
+    const getProductById = async (state, id) => {
+        const product = await getDoc(doc(db, 'products', id));
+        state(product.data());
+    };
 
     // Create new product
     const createProduct = async (product_data) => {
         await addDoc(productsCollection, product_data);
-        console.log('Producto creado.')
     };
 
     // Update product
@@ -59,7 +60,7 @@ export function AppContextProvider(props) {
 
     // Create admin user
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loadingUser, setLoadingUser] = useState(true);
 
     const createAdminUser = async (email, password) =>  { 
         await createUserWithEmailAndPassword(auth, email, password);
@@ -67,7 +68,7 @@ export function AppContextProvider(props) {
 
     // Login for admin user
     const loginAdminUser = (email, password) =>  { 
-        signInWithEmailAndPassword(auth, email, password)
+        signInWithEmailAndPassword(auth, email, password);
     };
 
     // Reset password email
@@ -80,13 +81,9 @@ export function AppContextProvider(props) {
 
     useEffect(() => {
         const unsubuscribe = onAuthStateChanged(auth, (currentUser) => {
+          currentUser ? currentUser.displayName = 'Silvi' : null;
           setUser(currentUser);
-          setLoading(false);
-          if (currentUser !== null) {
-            localStorage.setItem('user', JSON.stringify(currentUser));
-          } else {
-            localStorage.removeItem('user');
-          }
+          setLoadingUser(false);
         });
 
         return () => unsubuscribe();
@@ -95,7 +92,8 @@ export function AppContextProvider(props) {
     return (
         <AppContext.Provider 
             value={{
-                products,
+                getProducts,
+                getProductById,
                 createProduct,
                 updateProduct,
                 deleteProduct,
@@ -104,7 +102,7 @@ export function AppContextProvider(props) {
                 resetPassword,
                 logout,
                 user,
-                loading
+                loadingUser
             }}>
             {props.children}
         </AppContext.Provider>
