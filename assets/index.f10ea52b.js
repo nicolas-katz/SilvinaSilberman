@@ -3618,8 +3618,8 @@ This typically indicates that your device does not have a healthy Internet conne
 
     h6 {
       color: black;
-      font-size: 12px;
-      line-height: 22px;
+      font-size: 14px;
+      line-height: 24px;
       font-weight: 500;
       text-align: center;
       text-transform: uppercase;
@@ -4848,8 +4848,8 @@ This typically indicates that your device does not have a healthy Internet conne
             align-items: center;
 
             color: gray;
-            font-size: 12px;
-            line-height: 22px;
+            font-size: 14px;
+            line-height: 24px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -4862,8 +4862,8 @@ This typically indicates that your device does not have a healthy Internet conne
                 border-bottom: 1px solid black;
                 
                 color: black;
-                font-size: 14px;
-                line-height: 24px;
+                font-size: 16px;
+                line-height: 26px;
                 font-weight: 500;
                 text-transform: lowercase;
                 text-decoration: none;
@@ -4871,4 +4871,4 @@ This typically indicates that your device does not have a healthy Internet conne
             }
         }
     }
-`;function gM(){return D("div",{children:[w(va,{}),D(mM,{children:[w("h1",{children:"Quien Soy"}),D("div",{children:[D("p",{children:["Barrio Chino Est. 2017 ",w("br",{})," ",w("br",{}),"Nacido en la Cordillera de los Andes ",w("br",{})," ",w("br",{}),"Hecho en Buenos Aires ",w("br",{})," ",w("br",{}),"Cada prenda es confeccionada con materia prima de primera calidad, de manera responsable y \xE9tica en cada una de las etapas de su producci\xF3n y su impresi\xF3n. ",w("br",{})," ",w("br",{}),"Cada ser que forma parte del proceso lo hace con amor y dedicaci\xF3n."]}),w("h4",{children:"Contacto"}),D("h5",{children:["Email: ",w("a",{href:"",target:"_blank",children:"silvinasilberman@gmail.com"})]}),D("h5",{children:["Instagram: ",w("a",{href:"",target:"_blank",children:"@silvisilberarte"})]})]})]}),w(wa,{})]})}function yM(){return D(iT,{children:[w(Yn,{path:"/",element:w(iM,{})}),w(Yn,{path:"/about",element:w(gM,{})}),w(Yn,{path:"/coleccion/:productId",element:w(uM,{})}),w(Yn,{path:"/contact",element:w(eM,{})}),w(Yn,{path:"/login",element:w(dM,{children:w(oM,{})})}),w(Yn,{path:"/admin",element:w(hM,{children:w(BL,{})})}),w(Yn,{path:"/*",element:w(pM,{})})]})}Nh.createRoot(document.getElementById("root")).render(w(Ln.StrictMode,{children:w(uT,{children:w(AO,{children:w(yM,{})})})}));
+`;function gM(){return D("div",{children:[w(va,{}),D(mM,{children:[w("h1",{children:"Sobre Mi"}),D("div",{children:[D("p",{children:["Barrio Chino Est. 2017 ",w("br",{})," ",w("br",{}),"Nacido en la Cordillera de los Andes ",w("br",{})," ",w("br",{}),"Hecho en Buenos Aires ",w("br",{})," ",w("br",{}),"Cada prenda es confeccionada con materia prima de primera calidad, de manera responsable y \xE9tica en cada una de las etapas de su producci\xF3n y su impresi\xF3n. ",w("br",{})," ",w("br",{}),"Cada ser que forma parte del proceso lo hace con amor y dedicaci\xF3n."]}),w("h4",{children:"Contacto"}),D("h5",{children:["Email: ",w("a",{href:"",target:"_blank",children:"silvinasilberman@gmail.com"})]}),D("h5",{children:["Instagram: ",w("a",{href:"",target:"_blank",children:"@silvisilberarte"})]})]})]}),w(wa,{})]})}function yM(){return D(iT,{children:[w(Yn,{path:"/",element:w(iM,{})}),w(Yn,{path:"/about",element:w(gM,{})}),w(Yn,{path:"/coleccion/:productId",element:w(uM,{})}),w(Yn,{path:"/contact",element:w(eM,{})}),w(Yn,{path:"/login",element:w(dM,{children:w(oM,{})})}),w(Yn,{path:"/admin",element:w(hM,{children:w(BL,{})})}),w(Yn,{path:"/*",element:w(pM,{})})]})}Nh.createRoot(document.getElementById("root")).render(w(Ln.StrictMode,{children:w(uT,{children:w(AO,{children:w(yM,{})})})}));
