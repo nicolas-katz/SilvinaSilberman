@@ -279,7 +279,7 @@ export default function ProductDetails() {
           { 
             product ?
             <StyledProduct>
-              <img src={product.primaryImage} alt={product.title} />
+              <img src={product.images} alt={product.title} />
               <div className='product__information'>
                 <span><NavLink to='/'>Inicio </NavLink> / <label>{product.title}</label></span>
                 <h1>{product.title} <span>{product.award && <BsAward />}</span></h1>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import { 
     IoMdClose,
@@ -21,7 +21,6 @@ const StyledAdmin = styled.div`
     & div.messages__container {
         width: 100%;
         height: max-content;
-        margin: 20px 0 0 0;
         padding: 20px;
 
         display: flex;
@@ -75,6 +74,13 @@ const StyledAdmin = styled.div`
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 2px;
+
+        &.logout {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2;
+        }
     }
 
     & h2 {
@@ -300,16 +306,18 @@ export default function Admin() {
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('');
     const [award, setAward] = useState(false);
+    const [awardPhoto, setAwardPhoto] = useState(null);
+    const [awardURL, setAwardURL] = useState('');
     const [price, setPrice] = useState('');
     const [status, setStatus] = useState(null);
-    const [primaryImage, setPrimaryImage] = useState(null);
+    const [images, setImages] = useState(null);
 
     const handleLogout = async () => {
       try {
         await logout();
-        navigate('/');
-      } catch (error) {
-        console.error(error.message);
+        !user && navigate('/');
+      } catch ( err ) {
+        console.error(err.message);
       }
     };
 
@@ -317,11 +325,20 @@ export default function Admin() {
         const element = e.target
         const file = element.files[0];
         const reader = new FileReader();
-        
-        reader.onloadend = function() {
-            setPrimaryImage(reader.result.toString());
-        };
-        reader.readAsDataURL(file);
+
+        if (e.target.id === 'images') {
+            reader.onloadend = function() {
+                setImages(reader.result.toString())
+            };
+    
+            reader.readAsDataURL(file);
+        } else {
+            reader.onloadend = function() {
+                setAwardPhoto(reader.result.toString())
+            };
+    
+            reader.readAsDataURL(file);
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -331,21 +348,22 @@ export default function Admin() {
             description,
             category,
             award,
+            awardPhoto,
+            awardURL,
             price,
             status,
-            primaryImage
+            images
         });
 
+        setMessages('El retrato ha sido creado con exito.');
+    };
+
+    const handleReset = () => {
         setTitle('');
         setDescription('');
         setCategory('');
         setPrice('');
-        setAward(e.target.checked = false);
-        setStatus('');
-        setPrimaryImage('');
-
-        setMessages('El retrato ha sido creado con exito.');
-    };
+    }
 
     const handleDelete = async (id) => {
         await deleteProduct(id);
@@ -403,6 +421,7 @@ export default function Admin() {
                             minLength='3'
                             maxLength='20'
                             value={title}
+                            required
                         />
                     </div>
                     <div className='input__container'>
@@ -415,6 +434,7 @@ export default function Admin() {
                             minLength='8'
                             maxLength='200'
                             value={description}
+                            required
                         />
                     </div>
                     <div className='input__container'>
@@ -427,6 +447,7 @@ export default function Admin() {
                             minLength='3'
                             maxLength='20'
                             value={category}
+                            required
                         />
                     </div>
                     <div className='input__container'>
@@ -438,7 +459,35 @@ export default function Admin() {
                             id='award'
                             value={award}
                         />
-                    </div>
+                    </div>   
+                    {
+                        award === true && 
+                        <>
+                            <div className='input__container'>
+                                <label htmlFor='awardPhoto'>Imagen del Premio</label>
+                                <input 
+                                    onChange={handleOnChangeFile}
+                                    type='file'
+                                    name='awardPhoto'
+                                    id='awardPhoto'
+                                    required
+                                />
+                            </div>
+                            <div className='input__container'>
+                                <label htmlFor='awardURL'>URL de la Publicación</label>
+                                <input 
+                                    onChange={handleChange}
+                                    type='text'
+                                    name='awardURL'
+                                    id='awardURL'
+                                    minLength='2'
+                                    maxLength='200'
+                                    value={awardURL}
+                                    required
+                                />
+                            </div>
+                        </>
+                    }
                     <div className='input__container'>
                         <label htmlFor='price'>Precio (en dólares)</label>
                         <input 
@@ -447,8 +496,9 @@ export default function Admin() {
                             name='price' 
                             id='price' 
                             min='1'
-                            max='1000'
+                            max='5000'
                             value={price}
+                            required
                         />
                     </div>
                     <div className='input__container'>
@@ -459,6 +509,7 @@ export default function Admin() {
                                 name='status'
                                 id='status'
                                 value='disponible'
+                                required
                             />
                             <label htmlFor='disponible'>Disponible</label>
                         </div>
@@ -468,20 +519,23 @@ export default function Admin() {
                                 name='status'
                                 id='status'
                                 value='vendido'
+                                required
                             />
                             <label htmlFor='vendido'>Vendido</label>
                         </div>
                     </div>
                     <div className='input__container'>
-                        <label htmlFor='primaryImage'>Imagenes</label>
+                        <label htmlFor='images'>Imagenes</label>
                         <input 
                             onChange={handleOnChangeFile}
                             type='file'
-                            name='primaryImage'
-                            id='primaryImage'
+                            name='images'
+                            id='images'
+                            required
                         />
                     </div>
                     <button type='submit'>Crear retrato</button>
+                    <button type='reset' onClick={handleReset}>Vaciar Campos</button>
                 </form>
                 <h2>Ver, editar y/o eliminar retratos</h2>
                 <button onClick={handleRefresh}>Recargar datos</button>
@@ -490,7 +544,7 @@ export default function Admin() {
                         products && products.map((product) => {
                             return(
                                 <div key={product.id}>
-                                    <img src={product?.primaryImage} alt={product?.title} />
+                                    <img src={product?.images} alt={product?.title} />
                                     <span onClick={() => handleDelete(product?.id)}>
                                         <h5>Eliminar</h5>
                                         <IoMdClose />

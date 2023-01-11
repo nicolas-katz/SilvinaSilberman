@@ -203,13 +203,8 @@ export default function Products() {
     useEffect(()=> {
         getProducts(setProducts);
 
-        if (!products) {
-            setMessage('Los productos estan siendo cargados a la web, espere un momento.');
-        } else if (products?.length === 0) {
-            setMessage('Lo siento no hay productos disponibles en este momento.');
-        } else {
-            setMessage(null);
-        };
+        if (!products || products?.length < 0) setMessage('Los productos estan siendo cargados a la web, espere un momento o vuelva a intentarlo más tarde.') 
+        else setMessage(null);
     }, []);
 
     return (
@@ -217,11 +212,11 @@ export default function Products() {
             <h1>Portfolio</h1>
             <div className='portfolio' id='portfolio'>
                 {
-                    products ? products.map(( product ) => {
+                    products?.length > 0 && products ? products.map(( product ) => {
                         return(
                             <NavLink key={product.id} to={`/colection/${product.id}`}>
                                 <img 
-                                    src={product.primaryImage} 
+                                    src={product.images} 
                                     alt={product.title} 
                                 />
                             </NavLink>
