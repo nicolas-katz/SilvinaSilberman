@@ -7,8 +7,7 @@ import {
     updateDoc, 
     doc, 
     deleteDoc, 
-    getDoc,
-    onSnapshot
+    getDoc
 } from 'firebase/firestore';
 import { 
     createUserWithEmailAndPassword, 
@@ -81,7 +80,6 @@ export function AppContextProvider(props) {
 
     useEffect(() => {
         const unsubuscribe = onAuthStateChanged(auth, (currentUser) => {
-          currentUser ? currentUser.displayName = 'Silvi' : null;
           setUser(currentUser);
           setLoadingUser(false);
         });

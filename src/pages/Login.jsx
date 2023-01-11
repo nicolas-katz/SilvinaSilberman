@@ -1,16 +1,17 @@
-import React, { useState, useContext } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AppContext } from '../context/AppContext';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { 
     CgDanger
 } from 'react-icons/all';
 
 const StyledLogin = styled.div`
     width: 100%;
-    height: 100vh;
     min-height: max-content;
-    padding: 20px;
+    padding: 120px 20px 60px 20px;
 
     display: flex;
     flex-direction: column;
@@ -21,57 +22,41 @@ const StyledLogin = styled.div`
         width: 100%;
         max-width: 600px;
         height: max-content;
-        margin-top: 36px;
+        margin-top: 30px;
         padding: 20px;
 
         display: flex;
-        flex-direction: row;
+        flex-direction: column-reverse;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
 
         background-color: #c0212173;
 
         & p {
             color: #e53e3e;
-            font-size: 16px;
-            line-height: 26px;
-            font-weight: 400;
+            font-size: 12px;
+            line-height: 22px;
+            font-weight: 600;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         & svg {
-            min-width: max-content;
-            margin-left: 10px;
+            margin-bottom: 20px;
 
             color: #e53e3e;
-            font-size: 20px;
-        }
-    }
-
-    & h6 {
-        margin-bottom: 20px;
-
-        color: black;
-        font-size: 16px;
-        font-weight: 300;
-
-        & a {
-            width: max-content;
-            padding-bottom: 2px;
-
-            border-bottom: 1px solid gainsboro;
-            
-            color: gray;
-            text-decoration: none;
+            font-size: 24px;
         }
     }
 
     & h1 {
-        margin-bottom: 36px;
+        margin-bottom: 40px;
 
         color: black;
         font-size: 24px;
         line-height: 34px;
-        font-weight: 400;
+        font-weight: 500;
         text-align: center;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -154,6 +139,27 @@ const StyledLogin = styled.div`
             line-height: 38px;
         }   
 
+        & div.error__message {
+            padding: 40px;
+
+            flex-direction: row;
+            justify-content: space-between;
+
+            & p {
+                max-width: 80%;
+
+                font-size: 14px;
+                line-height: 24px;
+                text-align: left;
+            }
+
+            & svg {
+                margin-bottom: 0;
+
+                font-size: 28px;
+            }
+        }
+
         & form {
             padding: 48px;
 
@@ -173,6 +179,14 @@ const StyledLogin = styled.div`
 `;
 
 export default function Login() {
+    useEffect(() => {
+        window.scroll({
+          top: 0, 
+          left: 0, 
+          behavior: 'smooth' 
+        });
+    }, []);
+
     const { loginAdminUser, resetPassword, user } = useContext(AppContext);
     const navigate = useNavigate();
 
@@ -192,30 +206,10 @@ export default function Login() {
         setError('');
         try {
             await loginAdminUser(admin.email, admin.password);
-            if (user.email === admin.email && user.password === admin.password) navigate('/admin');
+            user && navigate('/admin');
         } catch( err ) {
-            switch (err.message) {
-                case 'Firebase: Error (auth/user-not-found).':
-                    setError('Correo inexistente. Por favor revisa los campos.');
-                    console.error(error);
-                    break;
-                case 'Firebase: Error (auth/email-invalid).':
-                    setError('Correo invalido. Por favor revisa los campos.');
-                    console.error(error);
-                    break;
-                case 'Firebase: Error (auth/wrong-password).':
-                    setError('Contraseña erronea. Por favor revisa los campos.');
-                    console.error(error);
-                    break;
-                case 'FirebaseError: Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests).':
-                    setError('Demasiados intentos fallidos. Por favor vuelve a intentarlo más tarde.');
-                    console.error(error);
-                    break;
-                default:
-                    setError('Ocurrio un error. Por favor vuelve a intentarlo.');
-                    console.error(error);
-                    break;
-            };
+            console.error(err);
+            setError('Ocurrio un error. Revisa si has escrito bien tanto tu correo como tu contraseña o vuelve a intentarlo más tarde.');
         }
     };
 
@@ -225,44 +219,47 @@ export default function Login() {
           await resetPassword(admin.email);
           setError('Te enviamos un email a tu correo para que puedas resetear tu contraseña.')
         } catch (err) {
-            setError('Ocurrio un error. No pudimos resetear tu contraseña. Vuelve a intentarlo.');
+            setError('Ocurrio un error. No pudimos resetear tu contraseña. Revisa si has escrito bien tu correo o vuelve a intentarnos más tarde.');
         }
     };    
 
     return (
-        <StyledLogin>
-            <h6>Regresar al home <NavLink to='/'>aquí</NavLink>.</h6>
-            <h1>Acceso de administrador</h1>
-            <form onSubmit={handleSubmit}>
-                <input 
-                    onChange={handleChange}
-                    type='email' 
-                    name='email'
-                    id='email'
-                    minLength='6'
-                    maxLength='40'
-                    placeholder='Ingresa tu correo electronico.'
-                    required />
-                <input 
-                    onChange={handleChange}
-                    type='password' 
-                    name='password'
-                    id='password'
-                    minLength='6'
-                    maxLength='40'
-                    placeholder='Ingresa tu contraseña.'
-                    required />
-                <div>
-                    <button 
-                        type='submit'>
-                        Iniciar sesión
-                    </button>
-                    <h4 onClick={handleResetPassword}>¿Olvidaste tu contraseña?</h4>
-                </div>
-            </form>
-            {
-                error && <div className='error__message'><p>{error}</p><CgDanger /></div>
-            }
-        </StyledLogin>
+        <div>
+            <Header />
+            <StyledLogin>
+                <h1>Acceso de administrador</h1>
+                <form onSubmit={handleSubmit}>
+                    <input 
+                        onChange={handleChange}
+                        type='email' 
+                        name='email'
+                        id='email'
+                        minLength='6'
+                        maxLength='40'
+                        placeholder='Ingresa tu correo electronico.'
+                        required />
+                    <input 
+                        onChange={handleChange}
+                        type='password' 
+                        name='password'
+                        id='password'
+                        minLength='6'
+                        maxLength='40'
+                        placeholder='Ingresa tu contraseña.'
+                        required />
+                    <div>
+                        <button 
+                            type='submit'>
+                            Iniciar sesión
+                        </button>
+                        <h4 onClick={handleResetPassword}>¿Olvidaste tu contraseña?</h4>
+                    </div>
+                </form>
+                {
+                    error && <div className='error__message'><p>{error}</p><CgDanger /></div>
+                }
+            </StyledLogin>
+            <Footer />
+        </div>
     );
 };

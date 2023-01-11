@@ -66,7 +66,7 @@ const StyledProduct = styled.div`
         margin-top: 6px;
         margin-left: 10px;
 
-        color: gray;
+        color: black;
         font-size: 20px;
       }
     }
@@ -210,7 +210,8 @@ const StyledProduct = styled.div`
 
 const StyledProductError = styled.div`
         width: 100%;
-        height: 100vh;
+        height: max-content;
+        margin: 60px 0;
         padding: 20px;
 
         display: flex;
@@ -253,6 +254,14 @@ export default function ProductDetails() {
     const [message, setMessage] = useState(null);
     const { productId } = useParams();
     const { getProductById } = useContext(AppContext);
+
+    useEffect(() => {
+      window.scroll({
+        top: 0, 
+        left: 0, 
+        behavior: 'smooth' 
+      });
+    }, []);
 
     useEffect(() => {
       getProductById(setProduct, productId);

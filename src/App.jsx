@@ -8,6 +8,10 @@ import Login from './pages/Login';
 import ProductDetails from './pages/ProductDetails';
 import { ProtectedAdmin, ProtectedLogin } from './ProtectedRoutes';
 import NotFound from './pages/NotFound';
+import About from './pages/About';
+import FAQs from './pages/FAQs';
+import Awards from './pages/Awards';
+import YourDesign from './pages/YourDesign';
 
 export default function App() {
     return (
@@ -17,8 +21,24 @@ export default function App() {
               element={<Index />} 
             />
             <Route 
-              path='/coleccion/:productId' 
+              path='/about' 
+              element={<About />} 
+            />
+            <Route 
+              path='/designs' 
+              element={<YourDesign />} 
+            />
+            <Route 
+              path='/awards' 
+              element={<Awards />} 
+            />
+            <Route 
+              path='/colection/:productId' 
               element={<ProductDetails />} 
+            />
+            <Route 
+              path='/faqs' 
+              element={<FAQs />} 
             />
             <Route 
               path='/contact' 

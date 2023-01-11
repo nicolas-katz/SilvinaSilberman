@@ -1,102 +1,134 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  BsInstagram,
-  FaFacebookF
-} from 'react-icons/all';
 import logo from '../assets/logo.png';
+import { NavLink } from 'react-router-dom';
 
 const StyledFooter = styled.footer`
   width: 100%;
   height: max-content;
-  padding: 20px;
+  padding: 60px 20px;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 
   background-color: white;
   border-top: 1px solid gainsboro;
 
-  & img {
-    width: 100px;
+  div.footer__header {
+    margin-bottom: 60px;
 
-    object-fit: contain;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    cursor: pointer;
-  }
+    img {
+      width: 100px;
 
-  & h4 {
-    margin: 28px 0;
-    color: black;
-    font-size: 16px;
-    line-height: 26px;
-    font-weight: 500;
-    text-align: center;
+      object-fit: contain;
 
-    & a {
-      transition: all .6s;
-
-      color: black;
-      text-decoration: none;
-
-      &:hover {
-        color: var(--colorHover);
-      }
-    }
-
-    & span {
-      display: block;
+      cursor: pointer;
     }
   }
 
-  & div {
+  div.footer__body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    div {
       display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
 
-      & a { 
-        width: max-content;
-        margin: 0 10px;
-
-        transition: all .6s;
+      h4 {
+        margin-bottom: 8px;
 
         color: black;
+        font-size: 14px;
+        line-height: 24px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      a {
+        color: gray;
+        font-size: 18px;
+        line-height: 28px;
+        font-weight: 400;
+        text-decoration: none;
+      }
+    }
+  }
+
+  div.footer__copyright {
+    margin-top: 60px;
+    padding: 60px 20px 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-top: 1px solid gainsboro;
+
+    h6 {
+      color: black;
+      font-size: 12px;
+      line-height: 22px;
+      font-weight: 500;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+
+      a {
+        width: max-content;
+        padding-bottom: 4px;
+
+        border-bottom: 1px solid gray;
         
-        & svg {
+        color: gray;
+        text-decoration: none;
+      }
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    div.footer__header {
+      img {
+        width: 140px;
+      }
+    }
+
+    div.footer__body {
+      justify-content: space-evenly;
+    }
+  }
+
+  @media only screen and (min-width: 900px) {
+    div.footer__body {
+      justify-content: center;
+
+      div {
+        margin: 0 80px;
+
+        h4 {
           font-size: 16px;
+          line-height: 26px;
         }
 
-        &:hover {
-          color: var(--colorHover);
-        }
-      }
-    }
-      
-    @media only screen and (min-width: 768px) {
-      flex-direction: row;
-      justify-content: space-between;
-
-      & h4 {
-        margin: 0;
-
-        & span {
-          display: inline;
+        a {
+          font-size: 20px;
+          line-height: 30px;
         }
       }
     }
 
-    @media only screen and (min-width: 1024px) {
-      & img {
-        width: 120px;
+    div.footer__copyright {
+      h6 {
+        font-size: 14px;
+        line-height: 24px;
       }
     }
-
-    @media only screen and (min-width: 1200px) {
-      padding: 20px 100px;
-    }
+  }
 `;
 
 export default function Footer() {
@@ -110,18 +142,27 @@ export default function Footer() {
 
     return (
       <StyledFooter>
-        <img 
-          onClick={handleTop}
-          src={logo} 
-          alt='Silvina Silberman' 
-        />
-        <h4>
-          © 2023 Silvina Silberman / <span>Develop by <a href='https://www.linkedin.com/in/nicokatz/' target="_blank" rel="noopener noreferrer">Nicolas Katz</a></span>
-        </h4>
-        <div>
-          <a href='https://www.instagram.com/silvisilberarte/' target="_blank" rel="noopener noreferrer"><BsInstagram /></a>
-          <a href='https://www.facebook.com/silvina.silber' target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
+        <div className='footer__header'><img src={logo} alt='Silvina Silberman' onClick={handleTop} /></div>
+        <div className='footer__body'>
+          <div>
+            <h4>Productos</h4>
+            <NavLink to='/'>Portfolio</NavLink>
+            <NavLink to='/designs'>Tu Diseño</NavLink>
+            <NavLink to='/faqs'>FAQ's</NavLink>
+          </div>
+          <div>
+            <h4>Quien Soy</h4>
+            <NavLink to='/about'>Sobre Mi</NavLink>
+            <NavLink to='/awards'>Premios</NavLink>
+          </div>
+          <div>
+            <h4>Contacto</h4>
+            <NavLink to='/contact'>Contacto</NavLink>
+            <a href='mailto:silvinasilberman@gmail.com?subject=Consulta desde la Web' target='_blank'>Email</a>
+            <a href='' target='_blank'>Instagram</a>
+          </div>
         </div>
+        <div className='footer__copyright'><h6>© 2023 Silvina Silberman / Desarrollado por <a href='' target='_blank'>Nicolas Katz</a></h6></div>
       </StyledFooter>
     );
 };

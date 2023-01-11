@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Barlow', 'Roboto Slab', 'Outfit', 'PT Sans', 'Inter', sans-serif;
+    font-family: 'Outfit', 'Barlow', 'PT Sans', 'Inter', 'Roboto Slab', sans-serif;
 }
   
 :root {

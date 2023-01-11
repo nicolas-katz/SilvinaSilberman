@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import styled from 'styled-components';
@@ -28,8 +28,8 @@ const StyledContact = styled.section`
                 margin-bottom: 20px;
 
                 color: black;
-                font-size: 26px;
-                line-height: 36px;
+                font-size: 28px;
+                line-height: 38px;
                 font-weight: 500;
                 text-transform: uppercase;
                 letter-spacing: 2px;
@@ -38,7 +38,7 @@ const StyledContact = styled.section`
             & p {
                 margin-bottom: 10px;
 
-                color: black;
+                color: gray;
                 font-size: 18px;
                 line-height: 28px;
                 font-weight: 300;
@@ -50,10 +50,11 @@ const StyledContact = styled.section`
                 & a {
                     padding-bottom: 2px;
 
-                    border-bottom: 1px solid gainsboro;
+                    border-bottom: 1px solid black;
                     transition: all .6s;
 
                     color: black;
+                    font-weight: 400;
                     text-decoration: none;
 
                     &:hover {
@@ -145,7 +146,7 @@ const StyledContact = styled.section`
 
         & img {
             width: 100%;
-            height: 380px;
+            height: 460px;
             margin-bottom: 20px;
 
             object-fit: cover;
@@ -156,7 +157,7 @@ const StyledContact = styled.section`
         }
 
         & h4 {
-            color: black;
+            color: gray;
             font-size: 18px;
             line-height: 28px;
             font-weight: 300;
@@ -207,6 +208,8 @@ const StyledContact = styled.section`
     }
 
     @media only screen and (min-width: 1024px) {
+        padding: 80px;
+
         & div:last-child {
             img {
                 height: 520px;
@@ -215,7 +218,7 @@ const StyledContact = styled.section`
     }
 
     @media only screen and (min-width: 1200px) {
-        padding: 40px 100px;
+        padding: 80px 160px;
 
         & div:last-child {
             width: 40%;
@@ -224,6 +227,14 @@ const StyledContact = styled.section`
 `;
 
 export default function Contact() {
+    useEffect(() => {
+        window.scroll({
+          top: 0, 
+          left: 0, 
+          behavior: 'smooth' 
+        });
+    }, []);
+
     const form = useRef();
 
     const sendEmail = (e) => {

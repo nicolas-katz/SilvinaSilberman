@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Products from '../components/Products';
@@ -10,7 +10,7 @@ const StyledMain = styled.main`
   position: relative;
 
   width: 100%;
-  height: 700px;
+  height: 640px;
   padding: 20px;
 
   display: flex;
@@ -18,7 +18,7 @@ const StyledMain = styled.main`
   align-items: center;
   justify-content: center;
 
-  background-color: #ffffff85;
+  background-color: #00000073;
   background-position: center;
   background-size: cover;
   background-blend-mode: multiply;
@@ -27,7 +27,7 @@ const StyledMain = styled.main`
   a {
     width: max-content;
     height: 54px;
-    margin-right: 20px;
+    margin-top: 40px;
     padding: 0 28px;
 
     display: flex;
@@ -59,7 +59,7 @@ const StyledMain = styled.main`
 
   svg {
     position: absolute;
-    bottom: 40px;
+    bottom: 60px;
     left: calc(50% - 20px);
 
     cursor: pointer;
@@ -67,7 +67,7 @@ const StyledMain = styled.main`
     color: white;
     font-size: 32px;
 
-    animation: mouse 1s alternate infinite ease-in-out;
+    animation: mouse 0.8s alternate infinite ease-in-out;
   }
 
   @keyframes mouse {
@@ -75,12 +75,41 @@ const StyledMain = styled.main`
       transform: translateY(0);
     }
     100% {
-      transform: translateY(20px);
+      transform: translateY(40px);
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    height: 680px;
+
+    a {
+      font-size: 16px;
+      line-height: 26px;
+    }
+
+    svg {
+      font-size: 34px;
+    }
+  }
+
+  @media only screen and (min-width: 1024px) {
+    height: 780px;
+
+    svg {
+      font-size: 36px;
     }
   }
 `;
 
 export default function Index() {  
+  useEffect(() => {
+      window.scroll({
+        top: 0, 
+        left: 0, 
+        behavior: 'smooth' 
+      });
+  }, []);
+
   return (
     <div>
         <Header />

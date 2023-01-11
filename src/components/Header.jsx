@@ -192,7 +192,7 @@ const StyledHeader = styled.header`
     @media only screen and (min-width: 1024px) {
         & nav {
             & a img {
-                width: 120px;
+                width: 140px;
             }
             
             & ul {
@@ -215,12 +215,15 @@ const StyledHeader = styled.header`
 
                 & li {
                     margin: 0;
-                    margin-left: 64px;
+                    margin-left: 38px;
                     
                     & a {
                         color: black;
-                        font-size: 16px;
-                        font-weight: 500;
+                        font-size: 12px;
+                        line-height: 22px;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        letter-spacing: 2px;
                     }
                 }
             }
@@ -228,7 +231,7 @@ const StyledHeader = styled.header`
     }
 
     @media only screen and (min-width: 1200px) {
-        padding: 20px 100px;
+        padding: 20px 40px;
     }
 `;
 
@@ -260,7 +263,7 @@ export default function Header() {
                         <NavLink to='/about'>Sobre Mi</NavLink>
                     </li>
                     <li onClick={handleOpenMenuByLinks}>
-                        <NavLink to='/personal-designs'>Diseños Personalizados</NavLink>
+                        <NavLink to='/designs'>Tu Diseño</NavLink>
                     </li>
                     <li onClick={handleOpenMenuByLinks}>
                         <NavLink to='/awards'>Premios</NavLink>

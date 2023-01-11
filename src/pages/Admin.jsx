@@ -285,6 +285,14 @@ export default function Admin() {
     const [messages, setMessages] = useState(null);
 
     useEffect(() => {
+        window.scroll({
+          top: 0, 
+          left: 0, 
+          behavior: 'smooth' 
+        });
+    }, []);
+
+    useEffect(() => {
         getProducts(setProducts);
     }, []);
 
@@ -382,7 +390,6 @@ export default function Admin() {
         <div>
             <Header />
             <StyledAdmin>
-                <h1>¡Bienvenida, {user?.displayName}!</h1>
                 { messages && <div className='messages__container'>{ messages } <IoCloseCircleOutline onClick={handleCloseMessages} /></div> }
                 <h2>Publicar nuevo retrato</h2>
                 <form onSubmit={handleSubmit}>

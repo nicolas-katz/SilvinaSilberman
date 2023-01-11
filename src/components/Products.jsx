@@ -8,17 +8,17 @@ const StyledProducts = styled.section`
     width: 100%;
     height: max-content;
     margin-top: 20px;
-    padding: 40px 20px;
+    padding: 60px 20px;
 
     display: flex;
     flex-direction: column;
 
     h1 {
-        margin-bottom: 36px;
+        margin-bottom: 40px;
 
         color: black;
-        font-size: 42px;
-        line-height: 52px;
+        font-size: 36px;
+        line-height: 46px;
         font-weight: 500;
         text-align: center;
     }
@@ -33,34 +33,32 @@ const StyledProducts = styled.section`
         align-items: center;
         justify-content: center;
 
-        background-color: #e8b717;
-        border-radius: 2px;
+        div {
+            width: 100%;
+            height: max-content;
+            padding: 20px;
 
-        color: white;
-        font-size: 24px;
-        line-height: 34px;
-        font-weight: 400;
-        text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
 
-        svg {
-            margin-bottom: 12px;
+            background-color: black;
+            border-radius: 2px;
 
             color: white;
-            font-size: 36px;
-        }
-    }
-
-    @media only screen and (min-width: 540px) {
-        & div.error__messages {
-            flex-direction: row;
-            justify-content: space-between;
-
-            text-align: left;
+            font-size: 12px;
+            line-height: 22px;
+            font-weight: 500;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
 
             svg {
-                min-width: max-content;
-                margin-bottom: 0;
-                margin-right: 20px;
+                margin-bottom: 20px;
+
+                color: white;
+                font-size: 28px;
             }
         }
     }
@@ -78,8 +76,7 @@ const StyledProducts = styled.section`
         & a {
             width: 100%;
             height: max-content;
-            margin: 1% 0;
-            padding: 10px;
+            margin: 2% 0;
 
             border: 1px solid transparent;
             transition: all .6s;
@@ -95,21 +92,43 @@ const StyledProducts = styled.section`
             }
 
             &:hover {
+                padding: 10px;
+
                 border: 1px solid gainsboro;
             }
         }
     }
 
     @media only screen and (min-width: 768px) {
+        h1 {
+            font-size: 42px;
+            line-height: 52px;
+        }
+
+        & div.error__messages {
+           div {
+                width: 80%;
+                padding: 40px;
+
+                font-size: 14px;
+                line-height: 24px;
+
+                svg {
+                    margin-bottom: 28px;
+
+                    font-size: 32px;
+                }
+           }
+        }
+        
         & div.portfolio {
             justify-content: space-between;
             
             & a {
                 width: 48%;
-                margin: 1%;
 
                 img {
-                    height: 420px;
+                    height: 480px;
 
                     object-fit: cover;
                 }
@@ -118,19 +137,59 @@ const StyledProducts = styled.section`
     }
 
     @media only screen and (min-width: 1024px) {
+        & div.error__messages {
+           div {
+                width: 80%;
+                padding: 40px 80px;
+
+                font-size: 18px;
+                line-height: 28px;
+
+                svg {
+                    margin-bottom: 32px;
+
+                    font-size: 40px;
+                }
+           }
+        }
+
         & div.portfolio {
-            & img {
-                height: 320px;
+            & a {
+                width: 32%;
+                margin: 1% 0;
+
+                img {
+                    height: 420px;
+                }
             }
         }
     }
 
     @media only screen and (min-width: 1200px) {
-        padding: 40px 100px;
+        padding: 80px 120px;
+
+        h1 {
+            margin-bottom: 60px;
+
+            font-size: 52px;
+            line-height: 62px;
+        }
+
+        & div.error__messages {
+           div {
+                width: 70%;
+                padding: 40px 100px;
+
+                font-size: 20px;
+                line-height: 30px;
+            }
+        }
 
         & div.portfolio {
-            & img {
-                height: 360px;
+            & a {
+                img {
+                    height: 520px;
+                }
             }
         }
     }
@@ -160,7 +219,7 @@ export default function Products() {
                 {
                     products ? products.map(( product ) => {
                         return(
-                            <NavLink key={product.id} to={`/coleccion/${product.id}`}>
+                            <NavLink key={product.id} to={`/colection/${product.id}`}>
                                 <img 
                                     src={product.primaryImage} 
                                     alt={product.title} 
@@ -168,8 +227,10 @@ export default function Products() {
                             </NavLink>
                         )
                     }) : <div className='error__messages'>
-                            <IoWarningOutline />
-                            { message }
+                            <div>
+                                <IoWarningOutline />
+                                { message }
+                            </div>
                         </div>
                 }
             </div>
