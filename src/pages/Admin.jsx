@@ -2,11 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import styled from 'styled-components';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import { 
     IoMdClose,
-    IoCloseCircleOutline 
+    IoCloseCircleOutline,
+    FiEdit2
 } from 'react-icons/all';
 
 const StyledAdmin = styled.div`
@@ -285,7 +286,7 @@ const StyledAdmin = styled.div`
 `;
 
 export default function Admin() {
-    const { logout, user, getProducts, createProduct, deleteProduct } = useContext(AppContext);
+    const { logout, getProducts, createProduct, updateProduct, deleteProduct } = useContext(AppContext);
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [messages, setMessages] = useState(null);
@@ -312,10 +313,13 @@ export default function Admin() {
     const [status, setStatus] = useState(null);
     const [images, setImages] = useState(null);
 
+    const [isEditing, setIsEditing] = useState(false);
+    const [productIDForEdit, setProductIDForEdit] = useState('');
+
     const handleLogout = async () => {
       try {
         await logout();
-        !user && navigate('/');
+        navigate('/login');
       } catch ( err ) {
         console.error(err.message);
       }
@@ -365,6 +369,44 @@ export default function Admin() {
         setPrice('');
     }
 
+    const handleEditForm = (product) => {
+        window.scroll({
+            top: 100, 
+            left: 0, 
+            behavior: 'smooth' 
+        });
+
+        setTitle(product.title);
+        setDescription(product.description);
+        setCategory(product.category);
+        setPrice(product.price);
+        setAward(product.award);
+        setAwardPhoto(product.awardPhoto);
+        setAwardURL(product.awardURL);
+        setStatus(product.status);
+        setImages(product.images);
+
+        setIsEditing(true);
+        setProductIDForEdit(product.id);
+    };
+
+    const handleEdit = async (e) => {
+        e.preventDefault();
+        await updateProduct(productIDForEdit, {
+            title,
+            description,
+            category,
+            award,
+            awardPhoto,
+            awardURL,
+            price,
+            status,
+            images
+        });
+        setMessages('El retrato ha sido modificado con exito.');
+        setIsEditing(false);
+    };
+
     const handleDelete = async (id) => {
         await deleteProduct(id);
         setMessages('El retrato ha sido eliminado con exito.');
@@ -389,6 +431,9 @@ export default function Admin() {
             case 'award':
                 setAward(e.target.checked);
                 break;
+            case 'awardURL':
+                setAwardURL(e.target.value);
+                break;
             case 'price':
                 setPrice(e.target.value);
                 break;
@@ -410,7 +455,7 @@ export default function Admin() {
             <StyledAdmin>
                 { messages && <div className='messages__container'>{ messages } <IoCloseCircleOutline onClick={handleCloseMessages} /></div> }
                 <h2>Publicar nuevo retrato</h2>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={!isEditing ? handleSubmit : handleEdit}>
                     <div className='input__container'>
                         <label htmlFor='title'>Titulo</label>
                         <input 
@@ -534,8 +579,15 @@ export default function Admin() {
                             required
                         />
                     </div>
-                    <button type='submit'>Crear retrato</button>
-                    <button type='reset' onClick={handleReset}>Vaciar Campos</button>
+                    {
+                        !isEditing ? <>
+                            <button type='submit'>Crear retrato</button>
+                            <button type='reset' onClick={handleReset}>Vaciar Campos</button>
+                        </> :
+                        <>
+                            <button type='submit'>Editar retrato</button>
+                        </>
+                    }
                 </form>
                 <h2>Ver, editar y/o eliminar retratos</h2>
                 <button onClick={handleRefresh}>Recargar datos</button>
@@ -548,6 +600,10 @@ export default function Admin() {
                                     <span onClick={() => handleDelete(product?.id)}>
                                         <h5>Eliminar</h5>
                                         <IoMdClose />
+                                    </span>
+                                    <span onClick={() => handleEditForm(product)}>
+                                        <h5>Editar</h5>
+                                        <FiEdit2 />
                                     </span>
                                 </div>
                             )
