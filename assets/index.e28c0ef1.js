@@ -4843,6 +4843,7 @@ This typically indicates that your device does not have a healthy Internet conne
         font-size: 42px;
         line-height: 52px;
       }
+    }
   }
 
   @media only screen and (min-width: 1024px) {
@@ -4858,45 +4859,89 @@ This typically indicates that your device does not have a healthy Internet conne
     padding: 80px 100px;
   }
 `,dM=vt.div`
-        width: 100%;
+     width: 100%;
         height: max-content;
-        margin: 60px 0;
-        padding: 20px;
+        margin-top: 40px;
+        padding: 40px 20px;
 
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
 
-        background-color: #e8b717;
-        border-radius: 2px;
+        div {
+            width: 100%;
+            height: max-content;
+            padding: 20px;
 
-        color: white;
-        font-size: 24px;
-        line-height: 34px;
-        font-weight: 400;
-        text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
 
-        svg {
-            margin-bottom: 12px;
+            background-color: black;
+            border-radius: 2px;
 
             color: white;
-            font-size: 36px;
-        }
-
-    @media only screen and (min-width: 540px) {
-            flex-direction: row;
-            justify-content: space-between;
-
-            text-align: left;
+            font-size: 12px;
+            line-height: 22px;
+            font-weight: 500;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
 
             svg {
-                min-width: max-content;
-                margin-bottom: 0;
-                margin-right: 20px;
+                margin-bottom: 20px;
+
+                color: white;
+                font-size: 28px;
             }
         }
-`;function fM(){const[t,e]=I.exports.useState(null),[n,r]=I.exports.useState(null),{productId:i}=YI(),{getProductById:s}=I.exports.useContext(Lr);return I.exports.useEffect(()=>{window.scroll({top:0,left:0,behavior:"smooth"})},[]),I.exports.useEffect(()=>{s(e,i),r(t?null:"Los productos estan siendo cargados a la web, espere un momento.")},[i]),k("div",{children:[m(Gn,{}),t?k(hM,{children:[m("img",{src:t.images,alt:t.title}),k("div",{className:"product__information",children:[k("span",{children:[m(Ke,{to:"/",children:"Inicio "})," / ",m("label",{children:t.title})]}),k("h1",{children:[t.title," ",m("span",{children:t.award&&m(jL,{})})]}),k("h2",{children:[t.price," ",m("span",{children:"usd"})," ",m("h3",{className:t.status==="disponible"?"disponible":"vendido",children:t.status})]}),m("p",{children:t.description}),t.status==="disponible"?k("a",{className:"ask__product",href:`mailto:silvinasilberman@gmail.com?subject=Quiero encargar: ${t.title}`,children:["Comprar ",m(VL,{})]}):k(Ke,{className:"ask__product",to:"/contact",children:["Realizar consulta ",m(OL,{})]}),k("div",{className:"buyer__information",children:[k("h4",{children:[m(BL,{}),"Marco"]}),m("p",{children:"Al momento de realizar tu pedido, podr\xE1s eligir entre distintas opciones de marcos y/o portarretratos, el cu\xE1l estar\xE1 incluido en su compra."}),k("h4",{children:[m(UL,{}),"Env\xEDos a domicilio"]}),m("p",{children:"Los env\xEDos a domicilio no estar\xE1n incluidos en la compra, al momento de realizar tu pedido deber\xE1s pactar la forma de intercambio con el vendedor."}),k("h4",{children:[m(LL,{}),"Formas de pago"]}),m("p",{children:"La forma de pago principal es efectivo en d\xF3lares. Sin embargo, tambi\xE9n se aceptan transferencias bancarias o mercado pago con tarjeta de credito o debito. En este ultimo caso, preguntar el tipo de cambio."})]})]})]}):k(dM,{children:[m(PS,{}),n]}),m(Qn,{})]})}const pM=vt.div`
+
+    @media only screen and (min-width: 768px) {
+      div {
+                width: 80%;
+                padding: 40px;
+
+                font-size: 14px;
+                line-height: 24px;
+
+                svg {
+                    margin-bottom: 28px;
+
+                    font-size: 32px;
+                }
+           }
+      }
+
+      @media only screen and (min-width: 1024px) {
+        margin-top: 80px;
+
+        div {
+                width: 80%;
+                padding: 40px 80px;
+
+                font-size: 18px;
+                line-height: 28px;
+
+                svg {
+                    margin-bottom: 32px;
+
+                    font-size: 40px;
+                }
+           } 
+      }
+
+    @media only screen and (min-width: 1200px) {
+      div {
+                width: 70%;
+                padding: 40px 100px;
+
+                font-size: 20px;
+                line-height: 30px;
+            } 
+    }
+`;function fM(){const[t,e]=I.exports.useState(null),[n,r]=I.exports.useState(null),{productId:i}=YI(),{getProductById:s}=I.exports.useContext(Lr);return I.exports.useEffect(()=>{window.scroll({top:0,left:0,behavior:"smooth"})},[]),I.exports.useEffect(()=>{s(e,i),r(t?null:"Los productos estan siendo cargados a la web, espere un momento o vuelva a intentarlo m\xE1s tarde.")},[i]),k("div",{children:[m(Gn,{}),t?k(hM,{children:[m("img",{src:t.images,alt:t.title}),k("div",{className:"product__information",children:[k("span",{children:[m(Ke,{to:"/",children:"Inicio "})," / ",m("label",{children:t.title})]}),k("h1",{children:[t.title," ",m("span",{children:t.award&&m(jL,{})})]}),k("h2",{children:[t.price," ",m("span",{children:"usd"})," ",m("h3",{className:t.status==="disponible"?"disponible":"vendido",children:t.status})]}),m("p",{children:t.description}),t.status==="disponible"?k("a",{className:"ask__product",href:`mailto:silvinasilberman@gmail.com?subject=Quiero encargar: ${t.title}`,children:["Comprar ",m(VL,{})]}):k(Ke,{className:"ask__product",to:"/contact",children:["Realizar consulta ",m(OL,{})]}),k("div",{className:"buyer__information",children:[k("h4",{children:[m(BL,{}),"Marco"]}),m("p",{children:"Al momento de realizar tu pedido, podr\xE1s eligir entre distintas opciones de marcos y/o portarretratos, el cu\xE1l estar\xE1 incluido en su compra."}),k("h4",{children:[m(UL,{}),"Env\xEDos a domicilio"]}),m("p",{children:"Los env\xEDos a domicilio no estar\xE1n incluidos en la compra, al momento de realizar tu pedido deber\xE1s pactar la forma de intercambio con el vendedor."}),k("h4",{children:[m(LL,{}),"Formas de pago"]}),m("p",{children:"La forma de pago principal es efectivo en d\xF3lares. Sin embargo, tambi\xE9n se aceptan transferencias bancarias o mercado pago con tarjeta de credito o debito. En este ultimo caso, preguntar el tipo de cambio."})]})]})]}):m(dM,{children:k("div",{children:[m(PS,{}),n]})}),m(Qn,{})]})}const pM=vt.div`
     width: 100%;
     height: 100vh;
     padding: 20px;
